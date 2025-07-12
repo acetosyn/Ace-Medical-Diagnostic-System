@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ACE: Diagnostic Chat</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563eb',
+            secondary: '#0d9488'
+          },
+          borderRadius: {
+            button: '8px'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-white">
+
+<div id="chatInterface" class="flex h-screen">
+  <!-- Sidebar -->
+  <div id="chatSidebar">
+    <div class="p-4 border-b border-gray-200">
+      <a href="/" class="text-sm text-gray-500 hover:text-primary mb-4 inline-block">
+        <i class="ri-arrow-left-line"></i> Back to Home
+      </a>
+      <button class="w-full flex items-center justify-center px-4 py-2 bg-white border border-gray-300 rounded-button text-gray-700 hover:bg-gray-50">
+        <i class="ri-add-line mr-2"></i> New Chat
+      </button>
+    </div>
+    <div class="flex-1 overflow-y-auto p-2">
+      <div class="space-y-2">
+        <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 flex items-center text-sm">
+          <i class="ri-message-3-line mr-2"></i> Previous Consultation - July 12
+        </button>
+        <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 flex items-center text-sm">
+          <i class="ri-message-3-line mr-2"></i> Lab Results Analysis - July 10
+        </button>
+        <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 flex items-center text-sm">
+          <i class="ri-message-3-line mr-2"></i> Patient History Review - July 8
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Chat Content -->
+  <div class="flex-1 flex flex-col">
+    <!-- Header -->
+    <div class="chat-header">
+      <div class="logo-container">
+        <span class="text-3xl font-['Playfair_Display'] text-primary uppercase">ACE</span>
+      </div>
+      <h1 class="text-lg font-semibold text-gray-900">Diagnostic AI Assistant</h1>
+    </div>
+
+    <!-- Messages -->
+    <div id="chatMessages">
+      <div class="chat-bubble-assistant">
+        <p>Hello! I'm your AI diagnostic assistant. Please describe the patient's symptoms and I'll help analyze them.</p>
+      </div>
+    </div>
+
+    <!-- Chat Input -->
+    <div class="chat-input-wrapper">
+      <form id="chatForm">
+        <!-- Tools -->
+        <div class="chat-tools">
+          <input type="file" id="fileInput" class="hidden" accept=".pdf,.jpg,.jpeg,.png">
+          <button type="button"><i class="ri-attachment-2"></i></button>
+          <button type="button"><i class="ri-mic-line"></i></button>
+          <button type="button"><i class="ri-volume-up-line"></i></button>
+          <div id="filePreview" class="hidden flex-1">
+            <span id="fileName">Uploaded_File.pdf</span>
+            <button type="button"><i class="ri-close-line"></i></button>
+          </div>
+        </div>
+
+        <!-- Textarea -->
+        <textarea id="messageInput" rows="1" placeholder="Type your message..."></textarea>
+
+        <!-- Word Count & Send Button -->
+        <!-- <div id="charWordCount">0 chars • 0 words</div> -->
+        <button type="submit" class="send-button">
+          <i class="ri-send-plane-line"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- External JavaScript -->
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+
+</body>
+</html>
