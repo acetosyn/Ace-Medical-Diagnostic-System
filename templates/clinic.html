@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ACE Clinical Demo</title>
+  <link rel="stylesheet" href="static/css/home.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css">
+</head>
+<body>
+<!--Clinic Section -->
+<section class="py-16 bg-gray-50">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-12">
+<h2 class="text-3xl font-bold text-gray-900 mb-4">Experience ACE in Action</h2>
+<p class="text-lg text-gray-600 max-w-3xl mx-auto">
+Try our interactive demo to see how ACE can transform your clinical workflow. Input patient data and see the results instantly.
+</p>
+</div>
+<div class="bg-white rounded-lg shadow-sm overflow-hidden">
+<!-- Progress Steps -->
+<div class="border-b border-gray-200">
+<div class="px-6 py-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-8 h-8 rounded-full flex items-center justify-center border-2 progress-step completed">
+<div class="w-4 h-4 flex items-center justify-center">
+<i class="ri-check-line"></i>
+</div>
+</div>
+<div class="progress-line active w-12 mx-2"></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center border-2 progress-step active">2</div>
+<div class="progress-line w-12 mx-2"></div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center border-2 progress-step">3</div>
+</div>
+<div class="hidden sm:block">
+<button class="text-gray-400 hover:text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-question-line"></i>
+</div>
+</button>
+</div>
+</div>
+<div class="flex justify-between mt-2 text-sm">
+<span class="text-primary font-medium">Patient Info</span>
+<span class="text-primary font-medium">Symptoms & Labs</span>
+<span class="text-gray-500">Results</span>
+</div>
+</div>
+</div>
+<!-- Form Content -->
+<div class="p-6">
+<div class="mb-8">
+<h3 class="text-xl font-semibold text-gray-900 mb-4">Enter Clinical Data</h3>
+<p class="text-gray-600 mb-6">
+Please complete each section carefully. Your inputs will be used to generate diagnostic suggestions and clinical notes.
+</p>
+<div class="bg-gray-50 rounded-lg p-4 mb-6">
+<h4 class="text-sm font-medium text-gray-700 mb-2">Current Progress</h4>
+<div class="space-y-2">
+<div class="flex items-center">
+<div class="w-4 h-4 rounded-full bg-primary mr-2"></div>
+<span class="text-sm text-gray-600">Step 1: Patient Information</span>
+</div>
+<div class="flex items-center">
+<div class="w-4 h-4 rounded-full bg-gray-300 mr-2"></div>
+<span class="text-sm text-gray-600">Step 2: Symptoms & Medical History</span>
+</div>
+<div class="flex items-center">
+<div class="w-4 h-4 rounded-full bg-gray-300 mr-2"></div>
+<span class="text-sm text-gray-600">Step 3: Lab Results & Medications</span>
+</div>
+<div class="flex items-center">
+<div class="w-4 h-4 rounded-full bg-gray-300 mr-2"></div>
+<span class="text-sm text-gray-600">Step 4: Review & Submit</span>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="col-span-2 bg-white rounded-lg shadow-sm p-6 mb-6 hidden" id="clinicalSummary">
+<h4 class="text-lg font-semibold text-gray-900 mb-4">Clinical Data Summary</h4>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<h5 class="text-sm font-medium text-gray-700 mb-2">Patient Information</h5>
+<div class="bg-gray-50 rounded-lg p-4">
+<div id="patientInfoSummary" class="text-sm text-gray-600">
+No information entered yet.
+</div>
+</div>
+</div>
+<div>
+<h5 class="text-sm font-medium text-gray-700 mb-2">Symptoms</h5>
+<div class="bg-gray-50 rounded-lg p-4">
+<div id="symptomsSummary" class="text-sm text-gray-600">
+No symptoms selected yet.
+</div>
+</div>
+</div>
+<div>
+<h5 class="text-sm font-medium text-gray-700 mb-2">Medical History</h5>
+<div class="bg-gray-50 rounded-lg p-4">
+<div id="historySummary" class="text-sm text-gray-600">
+No medical history entered yet.
+</div>
+</div>
+</div>
+<div>
+<h5 class="text-sm font-medium text-gray-700 mb-2">Lab Results</h5>
+<div class="bg-gray-50 rounded-lg p-4">
+<div id="labsSummary" class="text-sm text-gray-600">
+No lab results entered yet.
+</div>
+</div>
+</div>
+</div>
+<div class="mt-6 flex justify-end">
+<button class="inline-flex items-center justify-center px-6 py-2 border border-transparent text-sm font-medium rounded-button shadow-sm text-white bg-primary hover:bg-primary/90 whitespace-nowrap">
+Submit to AI for Analysis
+<div class="w-5 h-5 ml-2 flex items-center justify-center">
+<i class="ri-robot-line"></i>
+</div>
+</button>
+</div>
+</div>
+<!-- Left Column - Symptoms -->
+<div>
+<div class="mb-6">
+<label class="block text-sm font-medium text-gray-700 mb-2">Patient Symptoms</label>
+<div class="grid grid-cols-2 gap-3 mb-4 bg-gray-50 p-4 rounded-md">
+<div class="flex items-center">
+<input type="checkbox" id="symptom1" class="custom-checkbox">
+<label for="symptom1" class="ml-2 text-sm text-gray-700">Fever</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="symptom2" class="custom-checkbox">
+<label for="symptom2" class="ml-2 text-sm text-gray-700">Cough</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="symptom3" class="custom-checkbox">
+<label for="symptom3" class="ml-2 text-sm text-gray-700">Shortness of Breath</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="symptom4" class="custom-checkbox">
+<label for="symptom4" class="ml-2 text-sm text-gray-700">Chest Pain</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="symptom5" class="custom-checkbox">
+<label for="symptom5" class="ml-2 text-sm text-gray-700">Fatigue</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="symptom6" class="custom-checkbox">
+<label for="symptom6" class="ml-2 text-sm text-gray-700">Headache</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="symptom7" class="custom-checkbox">
+<label for="symptom7" class="ml-2 text-sm text-gray-700">Nausea</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="symptom8" class="custom-checkbox">
+<label for="symptom8" class="ml-2 text-sm text-gray-700">Vomiting</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="symptom9" class="custom-checkbox">
+<label for="symptom9" class="ml-2 text-sm text-gray-700">Diarrhea</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="symptom10" class="custom-checkbox">
+<label for="symptom10" class="ml-2 text-sm text-gray-700">Abdominal Pain</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="symptom11" class="custom-checkbox">
+<label for="symptom11" class="ml-2 text-sm text-gray-700">Joint Pain</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="symptom12" class="custom-checkbox">
+<label for="symptom12" class="ml-2 text-sm text-gray-700">Muscle Pain</label>
+</div>
+</div>
+<label for="symptoms" class="block text-sm font-medium text-gray-700 mb-2">Additional Symptoms & Notes</label>
+<textarea id="symptoms" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-gray-900 text-sm" placeholder="Enter any additional symptoms, duration, severity, or other relevant notes..."></textarea>
+</div>
+<div class="mb-6">
+<label class="block text-sm font-medium text-gray-700 mb-2">Medical History</label>
+<div class="grid grid-cols-2 gap-3">
+<div class="flex items-center">
+<input type="checkbox" id="history1" class="custom-checkbox">
+<label for="history1" class="ml-2 text-sm text-gray-700">Hypertension</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="history2" class="custom-checkbox" checked>
+<label for="history2" class="ml-2 text-sm text-gray-700">Type 2 Diabetes</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="history3" class="custom-checkbox">
+<label for="history3" class="ml-2 text-sm text-gray-700">Asthma</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="history4" class="custom-checkbox">
+<label for="history4" class="ml-2 text-sm text-gray-700">COPD</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="history5" class="custom-checkbox">
+<label for="history5" class="ml-2 text-sm text-gray-700">Coronary Artery Disease</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="history6" class="custom-checkbox">
+<label for="history6" class="ml-2 text-sm text-gray-700">Rheumatoid Arthritis</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="history7" class="custom-checkbox">
+<label for="history7" class="ml-2 text-sm text-gray-700">Chronic Kidney Disease</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="history8" class="custom-checkbox">
+<label for="history8" class="ml-2 text-sm text-gray-700">Depression</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="history9" class="custom-checkbox">
+<label for="history9" class="ml-2 text-sm text-gray-700">Anxiety Disorder</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="history10" class="custom-checkbox">
+<label for="history10" class="ml-2 text-sm text-gray-700">Hypothyroidism</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="history11" class="custom-checkbox">
+<label for="history11" class="ml-2 text-sm text-gray-700">Osteoporosis</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="history12" class="custom-checkbox">
+<label for="history12" class="ml-2 text-sm text-gray-700">Sleep Apnea</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="history13" class="custom-checkbox">
+<label for="history13" class="ml-2 text-sm text-gray-700">Gastric Ulcer</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="history14" class="custom-checkbox">
+<label for="history14" class="ml-2 text-sm text-gray-700">Migraine</label>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="history15" class="custom-checkbox">
+<label for="history15" class="ml-2 text-sm text-gray-700">Epilepsy</label>
+</div>
+</div>
+</div>
+<div class="mb-6">
+<label class="block text-sm font-medium text-gray-700 mb-2">Current Medications</label>
+<div class="relative">
+<input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-gray-900 text-sm pr-10" placeholder="Add medication...">
+<button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-primary">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-add-line"></i>
+</div>
+</button>
+</div>
+<div class="mt-3 space-y-2">
+<div class="flex items-center justify-between bg-gray-50 px-3 py-2 rounded-md">
+<span class="text-sm text-gray-700">Metformin 500mg BID</span>
+<button class="text-gray-400 hover:text-gray-600">
+<div class="w-5 h-5 flex items-center justify-center">
+<i class="ri-close-line"></i>
+</div>
+</button>
+</div>
+<div class="flex items-center justify-between bg-gray-50 px-3 py-2 rounded-md">
+<span class="text-sm text-gray-700">Lisinopril 10mg QD</span>
+<button class="text-gray-400 hover:text-gray-600">
+<div class="w-5 h-5 flex items-center justify-center">
+<i class="ri-close-line"></i>
+</div>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column - Labs -->
+<div>
+<div class="mb-6">
+<div class="flex justify-between items-center mb-2">
+<label class="block text-sm font-medium text-gray-700">Laboratory Results</label>
+<button class="text-primary text-sm font-medium hover:text-primary/80">
++ Add New
+</button>
+</div>
+<div class="bg-gray-50 rounded-lg p-4 mb-4">
+<div class="grid grid-cols-2 gap-4 mb-3">
+<div>
+<label for="lab1-name" class="block text-xs font-medium text-gray-500 mb-1">Test Name</label>
+<input type="text" id="lab1-name" value="WBC" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-gray-900 text-sm">
+</div>
+<div>
+<label for="lab1-value" class="block text-xs font-medium text-gray-500 mb-1">Value</label>
+<input type="text" id="lab1-value" value="12.5 × 10^9/L" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-gray-900 text-sm">
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label for="lab1-ref" class="block text-xs font-medium text-gray-500 mb-1">Reference Range</label>
+<input type="text" id="lab1-ref" value="4.0-11.0 × 10^9/L" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-gray-900 text-sm">
+</div>
+<div class="flex items-end">
+<button class="text-gray-400 hover:text-gray-600 ml-auto">
+<div class="w-5 h-5 flex items-center justify-center">
+<i class="ri-delete-bin-line"></i>
+</div>
+</button>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 rounded-lg p-4">
+<div class="grid grid-cols-2 gap-4 mb-3">
+<div>
+<label for="lab2-name" class="block text-xs font-medium text-gray-500 mb-1">Test Name</label>
+<input type="text" id="lab2-name" value="CRP" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-gray-900 text-sm">
+</div>
+<div>
+<label for="lab2-value" class="block text-xs font-medium text-gray-500 mb-1">Value</label>
+<input type="text" id="lab2-value" value="45 mg/L" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-gray-900 text-sm">
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label for="lab2-ref" class="block text-xs font-medium text-gray-500 mb-1">Reference Range</label>
+<input type="text" id="lab2-ref" value="< 5 mg/L" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-gray-900 text-sm">
+</div>
+<div class="flex items-end">
+<button class="text-gray-400 hover:text-gray-600 ml-auto">
+<div class="w-5 h-5 flex items-center justify-center">
+<i class="ri-delete-bin-line"></i>
+</div>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="mb-6">
+<label class="block text-sm font-medium text-gray-700 mb-2">Upload Data (Optional)</label>
+<div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+<div class="w-12 h-12 mx-auto flex items-center justify-center rounded-full bg-primary/10 text-primary mb-4">
+<i class="ri-upload-cloud-line ri-xl"></i>
+</div>
+<p class="text-sm text-gray-600 mb-2">Drag and drop files here or</p>
+<button class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-button text-primary bg-primary/10 hover:bg-primary/20 whitespace-nowrap">
+Browse Files
+</button>
+<p class="text-xs text-gray-500 mt-2">Supports JSON, CSV, or HL7 FHIR formats</p>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Voice Input</label>
+<button class="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+<div class="w-5 h-5 flex items-center justify-center mr-2 text-primary">
+<i class="ri-mic-line"></i>
+</div>
+<span class="text-sm font-medium">Start Voice Recording</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-gray-200 flex justify-between">
+<button class="inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-button text-gray-700 bg-white hover:bg-gray-50 whitespace-nowrap">
+<div class="w-5 h-5 flex items-center justify-center mr-1">
+<i class="ri-arrow-left-line"></i>
+</div>
+Back
+</button>
+<div>
+<button class="inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-button text-gray-700 bg-white hover:bg-gray-50 mr-3 whitespace-nowrap">
+Save Draft
+</button>
+<button class="inline-flex items-center justify-center px-6 py-2 border border-transparent text-sm font-medium rounded-button shadow-sm text-white bg-primary hover:bg-primary/90 whitespace-nowrap">
+Continue
+<div class="w-5 h-5 flex items-center justify-center ml-1">
+<i class="ri-arrow-right-line"></i>
+</div>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+  <!-- Optional JavaScript -->
+  <script src="static/js/clinic.js"></script>
+</body>
+</html>
