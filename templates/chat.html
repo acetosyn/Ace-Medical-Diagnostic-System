@@ -1,5 +1,5 @@
-<div id="chatInterface" class="flex h-screen">
-  <!-- Sidebar -->
+<div id="chatInterface">
+  <!-- 📚 Sidebar -->
   <div id="chatSidebar">
     <div class="p-4 border-b border-gray-200">
       <button class="w-full flex items-center justify-center px-4 py-2 bg-white border border-gray-300 rounded-button text-gray-700 hover:bg-gray-50">
@@ -21,23 +21,22 @@
     </div>
   </div>
 
-  <!-- Main Chat Content -->
-  <div class="flex-1 flex flex-col">
+  <!-- 💬 Main Chat Content -->
+  <div id="chatContent">
+    <!-- Header -->
     <div class="chat-header">
-      <div class="logo-container">
-        <span class="text-3xl font-['Playfair_Display'] text-primary uppercase">ACE</span>
-      </div>
+      <span class="text-3xl font-['Playfair_Display'] text-primary uppercase">ACE</span>
       <h1 class="text-lg font-semibold text-gray-900">Diagnostic AI Assistant</h1>
     </div>
 
-    <!-- Messages -->
+    <!-- Messages Area (Scrolls independently) -->
     <div id="chatMessages">
       <div class="chat-bubble-assistant">
         <p>Hello! I'm your AI diagnostic assistant. Please describe the patient's symptoms and I'll help analyze them.</p>
       </div>
     </div>
 
-    <!-- Chat Input -->
+    <!-- Input Area -->
     <div class="chat-input-wrapper">
       <form id="chatForm">
         <div class="chat-tools">
