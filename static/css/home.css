@@ -17,7 +17,7 @@
 body {
   font-family: 'Inter', sans-serif;
   background-color: #f9fafb;
-  color: #1e293b;
+  color: var(--neutral-dark);
   line-height: 1.6;
   margin: 0;
   padding: 0;
@@ -42,19 +42,43 @@ p {
 
 a {
   transition: color var(--transition-speed);
+  text-decoration: none;
 }
 
 /*==============================
-  🎨 Utilities & Layout
+  📦 Container Layout
 ==============================*/
-.section {
-  padding: 4rem 1rem;
-}
-
 .container {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 1rem;
+}
+
+/*==============================
+  🎯 Dynamic Page Injection Styles
+==============================*/
+#pageContent {
+  transition: all 0.5s ease-in-out;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Slide-in animation for content */
+.page-slide-in {
+  animation: slideInFromRight 0.5s ease forwards;
+  opacity: 0;
+  transform: translateX(100px);
+}
+
+@keyframes slideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(80px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /*==============================
@@ -84,6 +108,9 @@ a {
   font-weight: 500;
 }
 
+/*==============================
+  🧩 Buttons
+==============================*/
 .button-primary {
   background-color: var(--primary-color);
   color: white;
@@ -105,7 +132,7 @@ a {
 }
 
 /*==============================
-  💎 Feature Section
+  💎 Feature Card
 ==============================*/
 .feature-card {
   background-color: white;
@@ -118,18 +145,6 @@ a {
 .feature-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 12px 30px var(--hover-shadow-color);
-}
-
-.feature-icon {
-  width: 3rem;
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--primary-color);
-  color: white;
-  border-radius: 9999px;
-  margin-bottom: 1rem;
 }
 
 /*==============================
@@ -170,29 +185,10 @@ a {
 }
 
 /*==============================
-  🧰 Progress Steps & Form Enhancements
+  🧰 Forms and Uploads
 ==============================*/
-.progress-step {
-  border: 2px solid var(--light-gray);
-  padding: 12px;
-  border-radius: 50%;
-  text-align: center;
-  transition: all var(--transition-speed);
-  font-weight: bold;
-}
-
-.progress-step.active {
-  border-color: var(--primary-color);
-  color: var(--primary-color);
-}
-
-.progress-step.completed {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
-  color: white;
-}
-
 input[type="text"],
+input[type="email"],
 textarea {
   width: 100%;
   padding: 0.75rem;
@@ -202,41 +198,11 @@ textarea {
 }
 
 input[type="text"]:focus,
+input[type="email"]:focus,
 textarea:focus {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
-}
-
-/*==============================
-  📦 Checkbox & Radio Enhancements
-==============================*/
-.custom-checkbox,
-.custom-radio {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  appearance: none;
-  border: 2px solid var(--dark-gray);
-  transition: all 0.2s ease-in-out;
-}
-
-.custom-checkbox:checked,
-.custom-radio:checked {
-  border-color: var(--primary-color);
-  background-color: var(--primary-color);
-}
-
-.custom-checkbox:checked::after {
-  content: '';
-  position: absolute;
-  left: 6px;
-  top: 2px;
-  width: 6px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
 }
 
 /*==============================
@@ -276,13 +242,6 @@ textarea:focus {
   margin-bottom: 2rem;
 }
 
-.cta-buttons a {
-  margin: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 500;
-}
-
 /*==============================
   🔚 Footer
 ==============================*/
@@ -295,6 +254,7 @@ footer {
 
 footer a {
   color: #cbd5e1;
+  transition: color 0.2s ease;
 }
 
 footer a:hover {

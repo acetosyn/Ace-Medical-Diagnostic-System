@@ -1,42 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ACE:Diagnostic Assistant</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ACE: Diagnostic Assistant</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-<link rel= "stylesheet" href="{{url_for ('static', filename= 'css/chat.css')}}">
-<!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}"> -->
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
 
-<script src="https://cdn.tailwindcss.com/3.4.16"></script>
-<script>tailwind.config={theme:{extend:{colors:{primary:'#2563eb',secondary:'#0d9488'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
 
+  <!-- Tailwind Config -->
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563eb',
+            secondary: '#0d9488'
+          },
+          borderRadius: {
+            button: '8px'
+          }
+        }
+      }
+    }
+  </script>
 </head>
 <body class="bg-white">
+
 <!-- Navbar -->
 <nav class="bg-white shadow-sm sticky top-0 z-50">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between h-16">
       <div class="flex items-center">
-        <a href="{{ url_for('home') }}" class="flex-shrink-0 flex items-center">
+        <a href="#" class="flex-shrink-0 flex items-center" onclick="loadPage('home.html')">
           <span class="text-3xl font-['Playfair_Display'] text-[#2563eb] uppercase">ACE</span>
           <span class="ml-2 text-gray-800 font-medium hidden sm:block">Clinical Assistant</span>
         </a>
       </div>
-      <div class="hidden md:flex md:items-center md:space-x-8">
-        <a href="{{ url_for('home') }}" class="text-gray-800 hover:text-primary px-3 py-2 text-sm font-medium border-b-2 border-primary">Home</a>
-        <a href="{{ url_for('chat') }}" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">Diagnostic AI</a>
-        <a href="{{ url_for('clinic') }}" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">Clinic</a>
-        <a href="{{ url_for('how') }}" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">How It Works</a>
-       <a href="{{ url_for('about') }}" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">About</a>
-        <a href="#" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">Contact</a>
-      </div>
+<div class="hidden md:flex md:items-center md:space-x-8">
+  <a href="/home" class="text-gray-800 hover:text-primary px-3 py-2 text-sm font-medium border-b-2 border-primary">Home</a>
+  <a href="/chat" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">Diagnostic AI</a>
+  <a href="/clinic" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">Clinic</a>
+  <a href="/how" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">How It Works</a>
+  <a href="/about" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">About</a>
+  <a href="/contact" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">Contact Us</a>
+</div>
+
       <div class="hidden md:flex md:items-center md:space-x-4">
         <a href="#" class="text-primary hover:text-primary-dark px-4 py-2 text-sm font-medium whitespace-nowrap">Log In</a>
         <a href="#" class="bg-primary text-white hover:bg-primary/90 px-4 py-2 rounded-button text-sm font-medium shadow-sm whitespace-nowrap">Sign Up</a>
@@ -51,207 +69,88 @@
       </div>
     </div>
   </div>
-
-  <!-- Mobile menu -->
-  <div class="mobile-menu hidden md:hidden">
-    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-      <a href="{{ url_for('home') }}" class="bg-gray-50 text-primary block px-3 py-2 rounded-md text-base font-medium">Home</a>
-      <a href="{{ url_for('how') }}" class="text-gray-600 hover:bg-gray-50 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">How It Works</a>
-      <a href="{{ url_for('clinic') }}" class="text-gray-600 hover:bg-gray-50 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Clinic</a>
-      <a href="{{ url_for('about') }}" class="text-gray-600 hover:bg-gray-50 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">About</a>
-      <a href="#" class="text-gray-600 hover:bg-gray-50 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Contact</a>
-    </div>
-    <div class="pt-4 pb-3 border-t border-gray-200">
-      <div class="flex items-center px-5">
-        <div class="flex-shrink-0">
-          <div class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 text-gray-500">
-            <i class="ri-user-line ri-lg"></i>
-          </div>
-        </div>
-        <div class="ml-3">
-          <div class="text-base font-medium text-gray-800">Guest User</div>
-          <div class="text-sm font-medium text-gray-500">Sign in to get started</div>
-        </div>
-      </div>
-      <div class="mt-3 px-2 space-y-1">
-        <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50">Log In</a>
-        <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-primary hover:bg-primary/90">Sign Up</a>
-      </div>
-    </div>
-  </div>
 </nav>
 
-<!-- Hero Section -->
-<section class="relative w-full overflow-hidden" style="background-image: url('https://readdy.ai/api/search-image?query=modern%20medical%20office%20with%20blue%20and%20teal%20accents%2C%20clean%20minimalist%20design%2C%20soft%20lighting%2C%20medical%20equipment%20visible%20but%20not%20prominent%2C%20professional%20healthcare%20environment%2C%20empty%20space%20on%20left%20side%20for%20text%20overlay%2C%20gradient%20from%20white%20to%20light%20blue%20on%20left%20side&width=1920&height=800&seq=hero123&orientation=landscape'); background-size: cover; background-position: center;">
-  <div class="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent"></div>
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-    <div class="flex flex-col md:flex-row items-center py-12 md:py-24 min-h-[600px]">
-      <div class="w-full md:w-1/2 md:pr-12 z-10">
-        <h1 class="hero-animate text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
-          AI-Powered Clinical Assistant for Modern Healthcare
-        </h1>
-        <p class="hero-animate text-lg sm:text-xl text-gray-700 mb-8 max-w-2xl">
-          ACE is an AI Assistant that helps doctors generate accurate diagnostic suggestions, clinical notes, and more. Save time, reduce errors, and focus on your patients.
-        </p>
-        <div class="hero-animate flex flex-col sm:flex-row gap-4">
-          <a href="#" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-button shadow-sm text-white bg-primary hover:bg-primary/90 whitespace-nowrap">
-            Get Started
-            <div class="w-5 h-5 ml-2 flex items-center justify-center">
-              <i class="ri-arrow-right-line"></i>
-            </div>
-          </a>
-          <a href="#" class="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-button text-gray-700 bg-white hover:bg-gray-50 whitespace-nowrap">
-            Learn More
-          </a>
-        </div>
-      </div>
-      <div class="w-full md:w-1/2 mt-12 md:mt-0"></div>
-    </div>
-  </div>
-</section>
+<!-- 🔁 DYNAMIC PAGE CONTENT LOADS HERE -->
+<main id="pageContent">
+  <!-- Default home content or welcome section can be added here -->
+</main>
 
-
-
-
-<!-- CTA Section -->
-<section class="py-16 bg-gradient-to-r from-primary to-secondary text-white">
-<div class="container mx-auto px-4 sm:px-6 lg:px-8">
-<div class="max-w-4xl mx-auto text-center">
-<h2 class="text-3xl font-bold mb-6">Ready to Transform Your Clinical Practice?</h2>
-<p class="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
-Join thousands of healthcare professionals who are using ACE to improve patient care, reduce documentation time, and stay current with medical research.
-</p>
-<div class="flex flex-col sm:flex-row gap-4 justify-center">
-<a href="#" class="inline-flex items-center justify-center px-6 py-3 border-2 border-white text-base font-medium rounded-button text-white bg-transparent hover:bg-white/10 whitespace-nowrap">
-Schedule a Demo
-</a>
-<a href="#" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-button shadow-sm text-primary bg-white hover:bg-gray-100 whitespace-nowrap">
-Get Started Now
-<div class="w-5 h-5 ml-2 flex items-center justify-center">
-<i class="ri-arrow-right-line"></i>
-</div>
-</a>
-</div>
-</div>
-</div>
-</section>
 <!-- Footer -->
 <footer class="bg-gray-900 text-white">
-<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-<!-- Company Info -->
-<div class="col-span-1 md:col-span-1">
-<div class="flex items-center mb-6">
-<span class="text-2xl font-['Pacifico'] text-white">ACE</span>
-<span class="ml-2 text-gray-300 font-medium">Clinical Assistant</span>
-</div>
-<p class="text-gray-400 text-sm mb-6">
-AI-powered clinical assistant helping doctors make better decisions and save time on documentation.
-</p>
-<div class="flex space-x-4">
-<a href="#" class="text-gray-400 hover:text-white">
-<div class="w-6 h-6 flex items-center justify-center">
-<i class="ri-twitter-x-line"></i>
-</div>
-</a>
-<a href="#" class="text-gray-400 hover:text-white">
-<div class="w-6 h-6 flex items-center justify-center">
-<i class="ri-linkedin-line"></i>
-</div>
-</a>
-<a href="#" class="text-gray-400 hover:text-white">
-<div class="w-6 h-6 flex items-center justify-center">
-<i class="ri-facebook-line"></i>
-</div>
-</a>
-<a href="#" class="text-gray-400 hover:text-white">
-<div class="w-6 h-6 flex items-center justify-center">
-<i class="ri-instagram-line"></i>
-</div>
-</a>
-</div>
-</div>
-<!-- Quick Links -->
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <!-- Company Info -->
+      <div>
+        <div class="flex items-center mb-6">
+          <span class="text-2xl font-['Pacifico'] text-white">ACE</span>
+          <span class="ml-2 text-gray-300 font-medium">Clinical Assistant</span>
+        </div>
+        <p class="text-gray-400 text-sm mb-6">AI-powered clinical assistant helping doctors make better decisions and save time on documentation.</p>
+        <div class="flex space-x-4">
+          <a href="#" class="text-gray-400 hover:text-white"><i class="ri-twitter-x-line"></i></a>
+          <a href="#" class="text-gray-400 hover:text-white"><i class="ri-linkedin-line"></i></a>
+          <a href="#" class="text-gray-400 hover:text-white"><i class="ri-facebook-line"></i></a>
+          <a href="#" class="text-gray-400 hover:text-white"><i class="ri-instagram-line"></i></a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
 <div>
-<h3 class="text-lg font-semibold mb-4">Quick Links</h3>
-<ul class="space-y-3">
-<li><a href="#" class="text-gray-400 hover:text-white text-sm">Home</a></li>
-<li><a href="#" class="text-gray-400 hover:text-white text-sm">How It Works</a></li>
-<li><a href="#" class="text-gray-400 hover:text-white text-sm">Demo</a></li>
-<li><a href="#" class="text-gray-400 hover:text-white text-sm">About</a></li>
-<li><a href="#" class="text-gray-400 hover:text-white text-sm">Contact</a></li>
-</ul>
+  <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+  <ul class="space-y-3">
+    <li><a href="/home" class="text-gray-800 hover:text-primary">Home</a></li>
+    <li><a href="/chat" class="text-gray-600 hover:text-primary">Diagnostic AI</a></li>
+    <li><a href="/clinic" class="text-gray-600 hover:text-primary">Clinic</a></li>
+    <li><a href="/how" class="text-gray-600 hover:text-primary">How It Works</a></li>
+    <li><a href="/about" class="text-gray-600 hover:text-primary">About</a></li>
+  </ul>
 </div>
-<!-- Legal -->
-<div>
-<h3 class="text-lg font-semibold mb-4">Legal</h3>
-<ul class="space-y-3">
-<li><a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a></li>
-<li><a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a></li>
-<li><a href="#" class="text-gray-400 hover:text-white text-sm">HIPAA Compliance</a></li>
-<li><a href="#" class="text-gray-400 hover:text-white text-sm">Data Security</a></li>
-<li><a href="#" class="text-gray-400 hover:text-white text-sm">Cookie Policy</a></li>
-</ul>
-</div>
-<!-- Contact -->
-<div>
-<h3 class="text-lg font-semibold mb-4">Contact Us</h3>
-<ul class="space-y-3">
-<li class="flex items-start">
-<div class="w-5 h-5 flex-shrink-0 flex items-center justify-center text-gray-400 mr-2 mt-0.5">
-<i class="ri-map-pin-line"></i>
-</div>
-<span class="text-gray-400 text-sm">123 Innovation Drive, Boston, MA 02115</span>
-</li>
-<li class="flex items-start">
-<div class="w-5 h-5 flex-shrink-0 flex items-center justify-center text-gray-400 mr-2 mt-0.5">
-<i class="ri-mail-line"></i>
-</div>
-<span class="text-gray-400 text-sm">info@aceclinical.ai</span>
-</li>
-<li class="flex items-start">
-<div class="w-5 h-5 flex-shrink-0 flex items-center justify-center text-gray-400 mr-2 mt-0.5">
-<i class="ri-phone-line"></i>
-</div>
-<span class="text-gray-400 text-sm">+1 (617) 555-0123</span>
-</li>
-</ul>
-<div class="mt-6">
-<h4 class="text-sm font-semibold mb-3">Subscribe to our newsletter</h4>
-<div class="flex">
-<input type="email" placeholder="Your email" class="w-full px-4 py-2 rounded-l-button border-none focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 text-sm">
-<button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-r-button text-sm font-medium whitespace-nowrap">
-Subscribe
-</button>
-</div>
-</div>
-</div>
-</div>
-<div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-<p class="text-gray-400 text-sm">© 2025 ACE Clinical Assistant. All rights reserved.</p>
-<div class="flex space-x-6 mt-4 md:mt-0">
-<div class="flex items-center text-gray-400">
-<div class="w-5 h-5 flex items-center justify-center mr-1">
-<i class="ri-shield-check-line"></i>
-</div>
-<span class="text-xs">HIPAA Compliant</span>
-</div>
-<div class="flex items-center text-gray-400">
-<div class="w-5 h-5 flex items-center justify-center mr-1">
-<i class="ri-lock-line"></i>
-</div>
-<span class="text-xs">256-bit Encryption</span>
-</div>
-<div class="flex items-center text-gray-400">
-<div class="w-5 h-5 flex items-center justify-center mr-1">
-<i class="ri-global-line"></i>
-</div>
-<span class="text-xs">SOC 2 Certified</span>
-</div>
-</div>
-</div>
-</div>
+
+
+      <!-- Legal -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Legal</h3>
+        <ul class="space-y-3 text-sm text-gray-400">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">HIPAA Compliance</a></li>
+          <li><a href="#">Data Security</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+        <ul class="space-y-3 text-sm text-gray-400">
+          <li class="flex items-start"><i class="ri-map-pin-line mr-2"></i> House 39, Efab Estate Lifecamp Abuja</li>
+          <li class="flex items-start"><i class="ri-mail-line mr-2"></i> tosinhakeem4@gmail.com</li>
+          <li class="flex items-start"><i class="ri-phone-line mr-2"></i> +234 912 566 2818</li>
+        </ul>
+        <div class="mt-6">
+          <h4 class="text-sm font-semibold mb-3">Subscribe to our newsletter</h4>
+          <div class="flex">
+            <input type="email" placeholder="Your email" class="w-full px-4 py-2 rounded-l-button text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary">
+            <button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-r-button text-sm font-medium">Subscribe</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+      <p>© 2025 ACE Clinical Assistant. All rights reserved.</p>
+      <div class="flex space-x-6 mt-4 md:mt-0">
+        <span class="flex items-center"><i class="ri-shield-check-line mr-1"></i> HIPAA Compliant</span>
+        <span class="flex items-center"><i class="ri-lock-line mr-1"></i> 256-bit Encryption</span>
+        <span class="flex items-center"><i class="ri-global-line mr-1"></i> SOC 2 Certified</span>
+      </div>
+    </div>
+  </div>
 </footer>
-  <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+
+<!-- JS for Dynamic Loading -->
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
 </body>
 </html>
