@@ -46,19 +46,25 @@
           <span class="ml-2 text-gray-800 font-medium hidden sm:block">Clinical Assistant</span>
         </a>
       </div>
+
+      <!-- Desktop Menu -->
+
 <div class="hidden md:flex md:items-center md:space-x-8">
   <a href="/home" class="text-gray-800 hover:text-primary px-3 py-2 text-sm font-medium border-b-2 border-primary">Home</a>
   <a href="/chat" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">Diagnostic AI</a>
   <a href="/clinic" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">Clinic</a>
   <a href="/how" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">How It Works</a>
   <a href="/about" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">About</a>
-  <a href="/contact" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">Contact Us</a>
+  <a href="#contact" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">Contact Us</a>
 </div>
+
 
       <div class="hidden md:flex md:items-center md:space-x-4">
         <a href="#" class="text-primary hover:text-primary-dark px-4 py-2 text-sm font-medium whitespace-nowrap">Log In</a>
         <a href="#" class="bg-primary text-white hover:bg-primary/90 px-4 py-2 rounded-button text-sm font-medium shadow-sm whitespace-nowrap">Sign Up</a>
       </div>
+
+      <!-- Mobile menu button -->
       <div class="flex items-center md:hidden">
         <button type="button" class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-primary hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary">
           <span class="sr-only">Open main menu</span>
@@ -67,6 +73,16 @@
           </div>
         </button>
       </div>
+    </div>
+
+    <!-- 📱 Mobile Menu (Hidden by default) -->
+    <div id="mobileMenu" class="md:hidden hidden bg-white px-4 pt-4 pb-6 space-y-4 shadow-md">
+      <a href="#" onclick="loadPage('home.html')" class="block text-gray-800 hover:text-primary">Home</a>
+      <a href="#" onclick="loadPage('chat.html')" class="block text-gray-600 hover:text-primary">Diagnostic AI</a>
+      <a href="#" onclick="loadPage('clinic.html')" class="block text-gray-600 hover:text-primary">Clinic</a>
+      <a href="#" onclick="loadPage('how.html')" class="block text-gray-600 hover:text-primary">How It Works</a>
+      <a href="#" onclick="loadPage('about.html')" class="block text-gray-600 hover:text-primary">About</a>
+      <a href="#contact" onclick="scrollToContact()" class="block text-gray-600 hover:text-primary">Contact Us</a>
     </div>
   </div>
 </nav>
@@ -95,7 +111,7 @@
         </div>
       </div>
 
-      <!-- Quick Links -->
+<!-- Quick Links -->
 <div>
   <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
   <ul class="space-y-3">
@@ -106,6 +122,7 @@
     <li><a href="/about" class="text-gray-600 hover:text-primary">About</a></li>
   </ul>
 </div>
+
 
 
       <!-- Legal -->
@@ -121,7 +138,7 @@
       </div>
 
       <!-- Contact -->
-      <div>
+        <div id="contact">
         <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
         <ul class="space-y-3 text-sm text-gray-400">
           <li class="flex items-start"><i class="ri-map-pin-line mr-2"></i> House 39, Efab Estate Lifecamp Abuja</li>
@@ -151,6 +168,7 @@
 
 <!-- JS for Dynamic Loading -->
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src= "{{url_for('static', filename = 'js/chat.js')}}"></script>
 
 </body>
 </html>

@@ -10,7 +10,7 @@
   overflow: hidden;
   margin: 2rem auto;
   max-width: 1200px;
-  min-height: 500px;
+  height: calc(100vh - 6rem); /* Use viewport height */
   box-shadow: 0 4px 20px var(--shadow-color);
 }
 
@@ -36,7 +36,18 @@
 }
 
 /*==============================
-  📄 Chat Header
+  📄 Chat Content Right Side
+==============================*/
+#chatContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+}
+
+/*==============================
+  🧠 Header
 ==============================*/
 .chat-header {
   padding: 1rem;
@@ -48,10 +59,11 @@
   font-size: 1.1rem;
   font-weight: 500;
   color: var(--primary-color);
+  flex-shrink: 0;
 }
 
 /*==============================
-  💬 Messages Area
+  💬 Messages Scroll Area
 ==============================*/
 #chatMessages {
   flex: 1;
@@ -64,7 +76,7 @@
   border-top: 1px solid var(--light-gray);
 }
 
-/* Chat Bubble (Assistant) */
+/* Assistant Chat Bubble */
 .chat-bubble-assistant {
   background-color: #f0f4ff;
   padding: 1rem;
@@ -75,12 +87,13 @@
 }
 
 /*==============================
-  ✍️ Chat Input Section
+  ✍️ Input Area
 ==============================*/
 .chat-input-wrapper {
   padding: 1rem;
   background-color: #ffffff;
   border-top: 1px solid var(--light-gray);
+  flex-shrink: 0;
 }
 
 #chatForm {
@@ -142,11 +155,12 @@
 }
 
 /*==============================
-  📱 Responsive Tweaks
+  📱 Mobile Responsive
 ==============================*/
 @media (max-width: 768px) {
   #chatInterface {
     flex-direction: column;
+    height: 100vh;
   }
 
   .chat-input-wrapper {
