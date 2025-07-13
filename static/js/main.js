@@ -2,13 +2,12 @@
 
 const pageContent = document.getElementById("pageContent");
 
-// Load page with slide animation
+// Load a new HTML page
 async function loadPage(url) {
   try {
     const response = await fetch(url);
     const html = await response.text();
 
-    // Slide out old content
     pageContent.classList.add("fade-slide-out");
 
     setTimeout(() => {
@@ -26,7 +25,7 @@ async function loadPage(url) {
   }
 }
 
-// Highlight active nav and footer links
+// Highlight nav links
 function updateActiveNav(path) {
   document.querySelectorAll("a[href]").forEach(link => {
     const href = link.getAttribute("href");
@@ -38,26 +37,31 @@ function updateActiveNav(path) {
   });
 }
 
-// Handle internal navigation using event delegation
+// Collapse mobile menu (if open)
+function collapseMobileMenu() {
+  const mobileMenu = document.getElementById("mobileMenu");
+  if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
+    mobileMenu.classList.add("hidden");
+  }
+}
+
+// Handle internal links
 document.addEventListener("click", function (e) {
   const link = e.target.closest("a[href^='/']");
   if (link && !link.hasAttribute("download") && !link.hasAttribute("target")) {
     const href = link.getAttribute("href");
-    const isInternal = href.startsWith("/") && !href.startsWith("//");
-
-    if (isInternal) {
+    if (href.startsWith("/")) {
       e.preventDefault();
-      const page = href === "/" ? "home" : href.replace(/^\//, "");
-      const file = `${page}.html`;
-
-      loadPage(file);
+      const page = href === "/" ? "home" : href.slice(1);
+      loadPage(`${page}.html`);
       updateActiveNav(href);
       history.pushState({ path: href }, "", href);
+      collapseMobileMenu();  // 🔁 collapse menu if clicked
     }
   }
 });
 
-// Handle hash-based scroll (e.g. Contact Us)
+// Handle hash links (e.g., #contact)
 document.addEventListener("click", function (e) {
   const link = e.target.closest("a[href^='#']");
   if (link) {
@@ -66,40 +70,77 @@ document.addEventListener("click", function (e) {
     if (target) {
       e.preventDefault();
       target.scrollIntoView({ behavior: "smooth" });
+      collapseMobileMenu(); // 🔁 collapse on scroll
     }
   }
 });
 
-// Load default page on initial visit
+// On load
 window.addEventListener("DOMContentLoaded", () => {
-  const path = location.pathname === "/" ? "home" : location.pathname.replace(/^\//, "");
-  const file = `${path}.html`;
-
-  loadPage(file);
+  const path = location.pathname === "/" ? "home" : location.pathname.slice(1);
+  loadPage(`${path}.html`);
   updateActiveNav(location.pathname);
 });
 
-// Handle browser navigation (back/forward)
+// Back/forward nav
 window.addEventListener("popstate", () => {
-  const path = location.pathname === "/" ? "home" : location.pathname.replace(/^\//, "");
-  const file = `${path}.html`;
-
-  loadPage(file);
+  const path = location.pathname === "/" ? "home" : location.pathname.slice(1);
+  loadPage(`${path}.html`);
   updateActiveNav(location.pathname);
 });
 
-// Scroll to contact section (if used by onclick="scrollToContact()")
-function scrollToContact() {
-  const contactSection = document.getElementById("contact");
-  if (contactSection) {
-    contactSection.scrollIntoView({ behavior: "smooth" });
+// Toggle mobile menu
+// Slide animation for mobile menu
+function toggleMobileMenu() {
+  const menu = document.getElementById("mobileMenu");
+
+  if (!menu) return;
+
+  if (menu.classList.contains("hidden")) {
+    // Show with animation
+    menu.classList.remove("hidden", "slide-exit", "slide-exit-active");
+    menu.classList.add("slide-enter");
+
+    requestAnimationFrame(() => {
+      menu.classList.add("slide-enter-active");
+    });
+
+    // Auto-collapse after 5 seconds
+    setTimeout(() => collapseMobileMenu(), 5000);
+
+  } else {
+    // Hide with animation
+    menu.classList.remove("slide-enter", "slide-enter-active");
+    menu.classList.add("slide-exit");
+
+    requestAnimationFrame(() => {
+      menu.classList.add("slide-exit-active");
+    });
+
+    setTimeout(() => {
+      menu.classList.add("hidden");
+      menu.classList.remove("slide-exit", "slide-exit-active");
+    }, 300);
   }
 }
 
-// Toggle mobile menu
-document.querySelector(".mobile-menu-button")?.addEventListener("click", () => {
-  const mobileMenu = document.getElementById("mobileMenu");
-  if (mobileMenu) {
-    mobileMenu.classList.toggle("hidden");
-  }
-});
+function collapseMobileMenu() {
+  const menu = document.getElementById("mobileMenu");
+
+  if (!menu || menu.classList.contains("hidden")) return;
+
+  menu.classList.remove("slide-enter", "slide-enter-active");
+  menu.classList.add("slide-exit");
+
+  requestAnimationFrame(() => {
+    menu.classList.add("slide-exit-active");
+  });
+
+  setTimeout(() => {
+    menu.classList.add("hidden");
+    menu.classList.remove("slide-exit", "slide-exit-active");
+  }, 300);
+}
+
+document.querySelector(".mobile-menu-button")?.addEventListener("click", toggleMobileMenu);
+

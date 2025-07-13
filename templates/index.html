@@ -76,14 +76,16 @@
     </div>
 
     <!-- 📱 Mobile Menu (Hidden by default) -->
-    <div id="mobileMenu" class="md:hidden hidden bg-white px-4 pt-4 pb-6 space-y-4 shadow-md">
-      <a href="#" onclick="loadPage('home.html')" class="block text-gray-800 hover:text-primary">Home</a>
-      <a href="#" onclick="loadPage('chat.html')" class="block text-gray-600 hover:text-primary">Diagnostic AI</a>
-      <a href="#" onclick="loadPage('clinic.html')" class="block text-gray-600 hover:text-primary">Clinic</a>
-      <a href="#" onclick="loadPage('how.html')" class="block text-gray-600 hover:text-primary">How It Works</a>
-      <a href="#" onclick="loadPage('about.html')" class="block text-gray-600 hover:text-primary">About</a>
-      <a href="#contact" onclick="scrollToContact()" class="block text-gray-600 hover:text-primary">Contact Us</a>
+<!-- 📱 Mobile Menu (Hidden by default) -->
+    <div id="mobileMenu" class="md:hidden hidden bg-white px-4 pt-2 pb-4 text-sm space-y-3 shadow-md rounded-lg">
+      <a href="/home" class="block text-gray-800 hover:text-primary">Home</a>
+      <a href="/chat" class="block text-gray-600 hover:text-primary">Diagnostic AI</a>
+      <a href="/clinic" class="block text-gray-600 hover:text-primary">Clinic</a>
+      <a href="/how" class="block text-gray-600 hover:text-primary">How It Works</a>
+      <a href="/about" class="block text-gray-600 hover:text-primary">About</a>
+      <a href="#contact" class="block text-gray-600 hover:text-primary">Contact Us</a>
     </div>
+
   </div>
 </nav>
 
@@ -168,7 +170,6 @@
 
 <!-- JS for Dynamic Loading -->
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-<script src= "{{url_for('static', filename = 'js/chat.js')}}"></script>
-
+<script src="{{ url_for('static', filename ='js/chat.js')}}"></script>
 </body>
 </html>
