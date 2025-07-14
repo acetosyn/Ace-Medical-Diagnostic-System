@@ -1,0 +1,104 @@
+/* clinic.css — Extends home.css for clinic.html */
+
+/* ========== Section Containers ========== */
+#part1, #part2 {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px var(--shadow-color);
+  margin-bottom: 3rem;
+  transition: all 0.3s ease-in-out;
+}
+
+/* ========== Headers ========== */
+#part1 h3, #part2 h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--neutral-dark);
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--light-gray);
+  padding-bottom: 0.5rem;
+}
+
+#part1 h4 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  color: #374151;
+}
+
+/* ========== Form Fields ========== */
+.form-input {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--dark-gray);
+  font-size: 0.875rem;
+  background-color: white;
+  color: var(--neutral-dark);
+  transition: border var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+.custom-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary-color);
+}
+
+/* ========== Upload Area ========== */
+.upload-area {
+  border: 2px dashed var(--dark-gray);
+  padding: 2rem;
+  text-align: center;
+  border-radius: 10px;
+  background-color: #ffffff;
+  transition: background 0.3s ease-in-out;
+}
+
+.upload-area:hover {
+  background-color: var(--neutral-light);
+}
+
+/* ========== Diagnose Button Reveal ========== */
+#diagnose1Btn,
+#diagnose2Btn {
+  transition: opacity 0.3s ease;
+}
+
+#diagnose1Btn.show,
+#diagnose2Btn.show {
+  display: block !important;
+}
+
+/* ========== Responsive Enhancements ========== */
+@media (max-width: 768px) {
+  #part1, #part2 {
+    padding: 1.25rem;
+  }
+}
+
+/* Style for the report-card output (already used in engine.py) */
+.report-card {
+  border: 1px solid var(--light-gray);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px var(--shadow-color);
+  background-color: white;
+  margin-top: 2rem;
+}
+
+/* ========== File Name Display Under Upload Box ========== */
+.upload-filename {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--dark-gray);
+  font-style: italic;
+}
+
+

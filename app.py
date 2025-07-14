@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
+import engine
 
 app = Flask(__name__)
 
@@ -54,6 +55,31 @@ def login():
 @app.route("/register")
 def register():
     return "<h1>Register page coming soon...</h1>", 200
+
+
+@app.route("/generate_report", methods=["POST"])
+def generate_report():
+    form_data= engine.extract_patient_data(request.form)
+    html=engine.generate_report_html(form_data)
+    return html
+
+@app.route("/generate_quick_report", methods= ["POST"])
+def generate_quick_report():
+    form_data=engine.extract_quick_upload_data(request.form)
+    html=engine.generate_quick_report_html(form_data)
+    return html
+
+# @app.route("/generate_report", methods=["POST"])
+# def generate_report():
+#     form_data = engine.extract_patient_data(request.form)
+#     html = engine.generate_report_html(form_data)
+#     return html
+
+# @app.route("/generate_quick_report", methods=["POST"])
+# def generate_quick_report():
+#     form_data = engine.extract_quick_upload_data(request.form)
+#     html = engine.generate_quick_report_html(form_data)
+#     return html
 
 
 if __name__ == "__main__":
