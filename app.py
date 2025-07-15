@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request
 import engine
 
 app = Flask(__name__)
@@ -7,7 +7,6 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     return render_template("index.html")
-
 
 # Serve inner pages as partials for AJAX/dynamic injection
 @app.route("/home.html")
@@ -29,7 +28,6 @@ def how_partial():
 @app.route("/about.html")
 def about_partial():
     return render_template("about.html")
-
 
 # Optional: fallback routes for direct navigation (in case JS fails)
 @app.route("/chat")
@@ -56,31 +54,17 @@ def login():
 def register():
     return "<h1>Register page coming soon...</h1>", 200
 
-
 @app.route("/generate_report", methods=["POST"])
 def generate_report():
-    form_data= engine.extract_patient_data(request.form)
-    html=engine.generate_report_html(form_data)
+    form_data = engine.extract_patient_data(request.form, request.files)
+    html = engine.generate_report_html(form_data)
     return html
 
-@app.route("/generate_quick_report", methods= ["POST"])
+@app.route("/generate_quick_report", methods=["POST"])
 def generate_quick_report():
-    form_data=engine.extract_quick_upload_data(request.form)
-    html=engine.generate_quick_report_html(form_data)
+    form_data = engine.extract_quick_upload_data(request.form, request.files)
+    html = engine.generate_quick_report_html(form_data)
     return html
-
-# @app.route("/generate_report", methods=["POST"])
-# def generate_report():
-#     form_data = engine.extract_patient_data(request.form)
-#     html = engine.generate_report_html(form_data)
-#     return html
-
-# @app.route("/generate_quick_report", methods=["POST"])
-# def generate_quick_report():
-#     form_data = engine.extract_quick_upload_data(request.form)
-#     html = engine.generate_quick_report_html(form_data)
-#     return html
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

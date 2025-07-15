@@ -16,6 +16,17 @@ async function loadPage(url) {
       pageContent.classList.remove("fade-slide-out");
       pageContent.classList.add("fade-slide-in");
 
+      // ✅ Inject page-specific JS if needed
+      if (url.includes("clinic")) {
+        loadScript("/static/js/clinic.js");
+      }
+      if (url.includes("chat")) {
+        loadScript("/static/js/chat.js");
+      }
+      if (url.includes("home")) {
+        loadScript("/static/js/home.js");
+      }
+
       setTimeout(() => {
         pageContent.classList.remove("fade-slide-in");
       }, 400);
@@ -23,6 +34,19 @@ async function loadPage(url) {
   } catch (err) {
     pageContent.innerHTML = "<div class='text-center text-red-600 py-12'>Failed to load page.</div>";
   }
+}
+
+// ✅ Utility function to load a script dynamically
+function loadScript(src) {
+  const existing = document.querySelector(`script[src="${src}"]`);
+  if (existing) {
+    existing.remove(); // Remove old one to force reload
+  }
+
+  const script = document.createElement("script");
+  script.src = src;
+  script.onload = () => console.log(`✅ ${src} loaded`);
+  document.body.appendChild(script);
 }
 
 // Highlight nav links
