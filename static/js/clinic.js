@@ -14,31 +14,45 @@ function generateReport(section) {
       formData.append("passport", passportInput.files[0]);
     }
 
+    // ✅ Include scanned report (lab image in part 1)
+    const reportInput = document.getElementById("reportUpload");
+    if (reportInput && reportInput.files.length > 0) {
+      formData.append("report_scan", reportInput.files[0]);
+    }
+
+    // ✅ Gather symptoms and history
+    const symptoms = [];
+    const history = [];
+
     document.querySelectorAll('input[type="checkbox"]').forEach((cb) => {
       if (cb.checked) {
         const label = cb.parentElement.textContent.trim();
-        if (cb.closest('.bg-gray-50')) {
-          formData.append("symptoms", label);
-        } else {
-          formData.append("history", label);
+        if (cb.closest('[data-section="symptoms"]')) {
+          symptoms.push(label);
+        } else if (cb.closest('[data-section="history"]')) {
+          history.push(label);
         }
       }
     });
 
+    symptoms.forEach(symptom => formData.append("symptoms", symptom));
+    history.forEach(hx => formData.append("history", hx));
+
+    // 🔁 Submit to server
     fetch("/generate_report", {
       method: "POST",
       body: formData
     })
-    .then(res => res.text())
-    .then(html => {
-      document.getElementById("part1").innerHTML = html;
-    });
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("part1").innerHTML = html;
+      });
 
   } else if (section === 2) {
     const name = document.querySelector('#part2 input[type="text"]').value;
     formData.append("quick_name", name);
 
-    // ✅ Include lab scan image
+    // ✅ Include lab scan image (for quick upload)
     const labInput = document.getElementById("labUpload");
     if (labInput && labInput.files.length > 0) {
       formData.append("lab_scan", labInput.files[0]);
@@ -48,12 +62,13 @@ function generateReport(section) {
       method: "POST",
       body: formData
     })
-    .then(res => res.text())
-    .then(html => {
-      document.getElementById("part2").innerHTML = html;
-    });
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("part2").innerHTML = html;
+      });
   }
 }
+
 
 // Reload page for editing
 function editSection(section) {
@@ -83,18 +98,21 @@ function downloadAsPDF(section) {
   const target = document.querySelector(`#part${section} .report-card`);
   if (!target) return alert("No report found!");
 
-  html2canvas(target).then(canvas => {
+  html2canvas(target, { scale: 2 }).then(canvas => {
     const imgData = canvas.toDataURL("image/png");
     const pdf = new jsPDF("p", "mm", "a4");
 
-    const imgProps = pdf.getImageProperties(imgData);
     const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
     pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
     pdf.save(`ACE_Report_Part${section}.pdf`);
+  }).catch(err => {
+    alert("Failed to generate PDF. Try again.");
+    console.error(err);
   });
 }
+
 
 // 📸 Preview uploaded image inside a container with file name
 function handleImageUpload(inputElement, previewId) {

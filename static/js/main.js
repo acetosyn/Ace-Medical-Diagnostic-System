@@ -18,7 +18,13 @@ async function loadPage(url) {
 
       // ✅ Inject page-specific JS if needed
       if (url.includes("clinic")) {
-        loadScript("/static/js/clinic.js");
+        loadScript("/static/js/clinic.js", () => {
+          // 👇 Rebind functions after report is injected dynamically
+          window.downloadAsPDF = downloadAsPDF;
+          window.downloadAsPNG = downloadAsPNG;
+          window.editSection = editSection;
+          window.diagnoseBackend = diagnoseBackend;
+        });
       }
       if (url.includes("chat")) {
         loadScript("/static/js/chat.js");
@@ -37,17 +43,21 @@ async function loadPage(url) {
 }
 
 // ✅ Utility function to load a script dynamically
-function loadScript(src) {
+function loadScript(src, callback) {
   const existing = document.querySelector(`script[src="${src}"]`);
   if (existing) {
-    existing.remove(); // Remove old one to force reload
+    existing.remove(); // Force reload if already present
   }
 
   const script = document.createElement("script");
   script.src = src;
-  script.onload = () => console.log(`✅ ${src} loaded`);
+  script.onload = () => {
+    console.log(`✅ ${src} loaded`);
+    if (typeof callback === "function") callback();
+  };
   document.body.appendChild(script);
 }
+
 
 // Highlight nav links
 function updateActiveNav(path) {

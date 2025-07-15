@@ -61,102 +61,101 @@
 </div>
 
 
-        <!-- Symptoms -->
-        <h3 class="text-xl font-semibold text-gray-900 mt-8 mb-4">Step 2: Symptoms & Medical History</h3>
+            <!-- Symptoms -->
+          <!-- Symptoms -->
+    <h3 class="text-xl font-semibold text-gray-900 mt-8 mb-4">Step 2: Symptoms & Medical History</h3>
 
-        <div class="mb-6 max-w-3xl">
-          <label class="block text-sm font-medium text-gray-700 mb-2">Patient Symptoms</label>
-          <div class="grid grid-cols-3 gap-3 bg-gray-50 p-4 rounded-md mb-4">
-            <label class="flex items-center text-sm"><input type="checkbox" class="custom-checkbox mr-2">Fever</label>
-            <label class="flex items-center text-sm"><input type="checkbox" class="custom-checkbox mr-2">Cough</label>
-            <label class="flex items-center text-sm"><input type="checkbox" class="custom-checkbox mr-2">Fatigue</label>
-            <label class="flex items-center text-sm"><input type="checkbox"
-                class="custom-checkbox mr-2">Headache</label>
-            <label class="flex items-center text-sm"><input type="checkbox" class="custom-checkbox mr-2">Chest
-              Pain</label>
-            <label class="flex items-center text-sm"><input type="checkbox" class="custom-checkbox mr-2">Joint
-              Pain</label>
-            <label class="flex items-center text-sm"><input type="checkbox"
-                class="custom-checkbox mr-2">Dizziness</label>
-            <label class="flex items-center text-sm"><input type="checkbox" class="custom-checkbox mr-2">Shortness of
-              Breath</label>
-            <label class="flex items-center text-sm"><input type="checkbox" class="custom-checkbox mr-2">Nausea</label>
-            <label class="flex items-center text-sm"><input type="checkbox" class="custom-checkbox mr-2">Sore
-              Throat</label>
-            <label class="flex items-center text-sm"><input type="checkbox" class="custom-checkbox mr-2">Skin
-              Rash</label>
-            <label class="flex items-center text-sm"><input type="checkbox" class="custom-checkbox mr-2">Muscle
-              Pain</label>
-            <label class="flex items-center text-sm"><input type="checkbox" class="custom-checkbox mr-2">Back
-              Pain</label>
-            <label class="flex items-center text-sm"><input type="checkbox" class="custom-checkbox mr-2">Runny
-              Nose</label>
-            <label class="flex items-center text-sm"><input type="checkbox" class="custom-checkbox mr-2">Loss of
-              Taste/Smell</label>
-          </div>
+   <div class="mb-6 max-w-3xl" data-section="symptoms">
+  <label class="block text-sm font-medium text-gray-700 mb-2">Patient Symptoms</label>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-3 bg-gray-50 p-4 rounded-md mb-4">
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Fever" class="custom-checkbox"> <span>Fever</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Cough" class="custom-checkbox"> <span>Cough</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Fatigue" class="custom-checkbox"> <span>Fatigue</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Headache" class="custom-checkbox"> <span>Headache</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Chest Pain" class="custom-checkbox"> <span>Chest Pain</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Joint Pain" class="custom-checkbox"> <span>Joint Pain</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Dizziness" class="custom-checkbox"> <span>Dizziness</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Shortness of Breath" class="custom-checkbox"> <span>Shortness of Breath</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Nausea" class="custom-checkbox"> <span>Nausea</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Sore Throat" class="custom-checkbox"> <span>Sore Throat</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Skin Rash" class="custom-checkbox"> <span>Skin Rash</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Muscle Pain" class="custom-checkbox"> <span>Muscle Pain</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Back Pain" class="custom-checkbox"> <span>Back Pain</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Runny Nose" class="custom-checkbox"> <span>Runny Nose</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Loss of Taste/Smell" class="custom-checkbox"> <span>Loss of Taste/Smell</span></label>
+  </div>
 
-          <label class="block text-sm font-medium text-gray-700 mb-2">Additional Notes</label>
-          <textarea rows="3" class="form-input w-full max-w-xl" placeholder="Describe symptoms in detail..."></textarea>
-        </div>
+  <label class="block text-sm font-medium text-gray-700 mb-2">Additional Notes</label>
+  <textarea rows="3" name="notes" class="form-input w-full max-w-xl" placeholder="Describe symptoms in detail..."></textarea>
+</div>
 
-        <!-- Medical History -->
-        <div class="mb-6 max-w-3xl">
-          <label class="block text-sm font-medium text-gray-700 mb-2">Medical History</label>
-          <div class="grid grid-cols-2 gap-3">
-            <label class="flex items-center text-sm"><input type="checkbox"
-                class="custom-checkbox mr-2">Hypertension</label>
-            <label class="flex items-center text-sm"><input type="checkbox"
-                class="custom-checkbox mr-2">Diabetes</label>
-            <label class="flex items-center text-sm"><input type="checkbox" class="custom-checkbox mr-2">Asthma</label>
-            <label class="flex items-center text-sm"><input type="checkbox"
-                class="custom-checkbox mr-2">Depression</label>
-            <label class="flex items-center text-sm"><input type="checkbox" class="custom-checkbox mr-2">Heart
-              Disease</label>
-            <label class="flex items-center text-sm"><input type="checkbox" class="custom-checkbox mr-2">Cancer</label>
-            <label class="flex items-center text-sm"><input type="checkbox" class="custom-checkbox mr-2">Kidney
-              Disease</label>
-            <label class="flex items-center text-sm"><input type="checkbox" class="custom-checkbox mr-2">Stroke</label>
-            <label class="flex items-center text-sm"><input type="checkbox" class="custom-checkbox mr-2">Anxiety</label>
-            <label class="flex items-center text-sm"><input type="checkbox" class="custom-checkbox mr-2">Thyroid
-              Disorders</label>
-          </div>
-        </div>
 
-        <!-- Upload Scanned Report -->
-        <div class="mb-6 max-w-lg">
-          <label class="block text-sm font-medium text-gray-700 mb-2">Upload Scanned Reports (Optional)</label>
-          <div class="relative border-2 border-dashed rounded-lg p-6 text-center bg-gray-50 hover:bg-gray-100">
-            <p class="text-gray-500">Drag & drop or click to upload</p>
-            <input type="file" id="reportUpload" accept="image/*" onchange="handleImageUpload(this, 'reportPreview')"
-              class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" title="Click or drag file to upload" />
-          </div>
-          <div id="reportPreview" class="mt-4 text-center text-sm text-gray-500 italic">No file selected.</div>
-          <div class="mt-2 text-center">
+<!-- Medical History -->
+<div class="mb-6 max-w-3xl" data-section="history">
+  <label class="block text-sm font-medium text-gray-700 mb-2">Medical History</label>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-3 bg-gray-50 p-4 rounded-md">
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="history" value="Hypertension" class="custom-checkbox"> <span>Hypertension</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="history" value="Diabetes" class="custom-checkbox"> <span>Diabetes</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="history" value="Asthma" class="custom-checkbox"> <span>Asthma</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="history" value="Depression" class="custom-checkbox"> <span>Depression</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="history" value="Heart Disease" class="custom-checkbox"> <span>Heart Disease</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="history" value="Cancer" class="custom-checkbox"> <span>Cancer</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="history" value="Kidney Disease" class="custom-checkbox"> <span>Kidney Disease</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="history" value="Stroke" class="custom-checkbox"> <span>Stroke</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="history" value="Anxiety" class="custom-checkbox"> <span>Anxiety</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="history" value="Thyroid Disorders" class="custom-checkbox"> <span>Thyroid Disorders</span></label>
+  </div>
+</div>
 
-            <button onclick="clearUpload('reportUpload', 'reportPreview')" class="clear-btn"
-              aria-label="Clear uploaded file">
-              <i class="ri-close-line text-base"></i>
-            </button>
 
-          </div>
-        </div>
 
-        <!-- CTA -->
-        <div class="mt-8 flex justify-between border-t border-gray-200 pt-6">
+<!-- Upload Scanned Report -->
+<div class="mb-6 max-w-lg">
+  <label class="block text-sm font-medium text-gray-700 mb-2">Upload Scanned Reports (Optional)</label>
+  <div class="relative border-2 border-dashed rounded-lg p-6 text-center bg-gray-50 hover:bg-gray-100">
+    <p class="text-gray-500">Drag & drop or click to upload</p>
+    <input type="file" id="reportUpload" accept="image/*"
+      onchange="handleImageUpload(this, 'reportPreview')"
+      class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+      title="Click or drag file to upload" />
+  </div>
+
+  <div id="reportPreview" class="mt-4 text-center text-sm text-gray-500 italic">No file selected.</div>
+
+  <div class="mt-3 flex justify-center">
+    <button onclick="clearUpload('reportUpload', 'reportPreview')"
+      class="clear-btn inline-flex items-center gap-1 px-3 py-1.5 rounded-button bg-red-100 text-red-600 hover:bg-red-200 hover:text-red-700 transition"
+      aria-label="Clear uploaded file">
+      <i class="ri-close-line text-base"></i>
+    </button>
+  </div>
+</div>
+
+
+    <!-- CTA -->
+    <div class="mt-8 border-t border-gray-200 pt-6">
+      <div class="flex flex-col sm:flex-row sm:justify-between gap-4">
+        <!-- Back Button -->
+        <button
+          class="px-4 py-2 bg-white border border-gray-300 text-sm text-gray-700 rounded-button hover:bg-gray-50 w-full sm:w-auto">
+          <i class="ri-arrow-left-line mr-1"></i> Back
+        </button>
+
+        <!-- Save & Continue -->
+        <div class="flex flex-col sm:flex-row gap-3 sm:gap-3 w-full sm:w-auto">
           <button
-            class="px-4 py-2 bg-white border border-gray-300 text-sm text-gray-700 rounded-button hover:bg-gray-50">
-            <i class="ri-arrow-left-line mr-1"></i> Back
+            class="px-4 py-2 bg-white border border-gray-300 text-sm text-gray-700 rounded-button hover:bg-gray-50 w-full sm:w-auto">
+            Save Draft
           </button>
-          <div>
-            <button
-              class="mr-3 px-4 py-2 bg-white border border-gray-300 text-sm text-gray-700 rounded-button hover:bg-gray-50">Save
-              Draft</button>
-            <button class="px-6 py-2 bg-primary text-white rounded-button hover:bg-primary/90 text-sm"
-              onclick="generateReport(1)">
-              Continue <i class="ri-arrow-right-line ml-2"></i>
-            </button>
-          </div>
+          <button
+            class="px-6 py-2 bg-primary text-white rounded-button hover:bg-primary/90 text-sm w-full sm:w-auto"
+            onclick="generateReport(1)">
+            Continue <i class="ri-arrow-right-line ml-2"></i>
+          </button>
         </div>
+      </div>
+    </div>
+
 
         <div class="text-center mt-8 hidden" id="diagnose1Btn">
           <button class="mt-4 px-6 py-2 bg-secondary text-white rounded-button hover:bg-secondary/90"
@@ -211,8 +210,6 @@
     </div>
   </div>
 </section>
-
-
 
 <!-- html2canvas & jsPDF -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/clinic.css') }}">

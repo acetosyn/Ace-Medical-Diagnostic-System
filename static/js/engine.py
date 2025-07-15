@@ -2,22 +2,14 @@
 import datetime
 import base64
 
-
-
 def extract_patient_data(form, files):
-    symptoms = form.getlist("symptoms")
-    history = form.getlist("history")
-
-    print("SYMPTOMS FROM FORM:", symptoms)
-    print("HISTORY FROM FORM:", history)
-
     data = {
         "name": form.get("name", "N/A"),
         "dob": form.get("dob", "N/A"),
         "sex": form.get("sex", "N/A"),
         "notes": form.get("notes", ""),
-        "symptoms": symptoms,
-        "history": history,
+        "symptoms": form.getlist("symptoms"),
+        "history": form.getlist("history"),
     }
 
     passport = files.get("passport")
@@ -30,7 +22,6 @@ def extract_patient_data(form, files):
     return data
 
 
-
 def extract_quick_upload_data(form, files):
     data = {
         "name": form.get("quick_name", "N/A"),
@@ -41,13 +32,10 @@ def extract_quick_upload_data(form, files):
     if lab_scan:
         encoded = base64.b64encode(lab_scan.read()).decode("utf-8")
         data["lab_b64"] = encoded
-        print("✅ Lab scan uploaded and encoded.")
     else:
-        print("⚠️ No lab scan uploaded.")
         data["lab_b64"] = ""
 
     return data
-
 
 
 def generate_report_html(data):
@@ -145,15 +133,8 @@ def generate_quick_report_html(data):
             </button>
         </div>
     </div>
-    
-        <!-- 👈 BACK BUTTON -->
-    <div class='text-center mt-6'>
-        <button onclick="editSection(1)" class='back-btn inline-flex items-center gap-2 px-5 py-2 text-sm rounded-button bg-gray-800 text-white hover:bg-gray-700 transition'>
-            <i class='ri-arrow-left-line'></i> Back to Form
-        </button>
-    </div>
-
     """
+
 
 def run_diagnosis_engine(data):
     return {
