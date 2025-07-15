@@ -112,13 +112,34 @@
 <!-- Upload Scanned Report -->
 <div class="mb-6 max-w-lg">
   <label class="block text-sm font-medium text-gray-700 mb-2">Upload Scanned Reports (Optional)</label>
+
   <div class="relative border-2 border-dashed rounded-lg p-6 text-center bg-gray-50 hover:bg-gray-100">
     <p class="text-gray-500">Drag & drop or click to upload</p>
-    <input type="file" id="reportUpload" accept="image/*"
+
+    <!-- ✅ Important: needed for Flask to receive file -->
+    <input 
+      type="file" 
+      id="reportUpload" 
+      name="report_scan"
+      accept="image/*"
       onchange="handleImageUpload(this, 'reportPreview')"
       class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
       title="Click or drag file to upload" />
   </div>
+
+  <div id="reportPreview" class="mt-4 text-center text-sm text-gray-500 italic">
+    No file selected.
+  </div>
+
+  <div class="mt-3 flex justify-center">
+    <button onclick="clearUpload('reportUpload', 'reportPreview')"
+      class="clear-btn inline-flex items-center gap-1 px-3 py-1.5 rounded-button bg-red-100 text-red-600 hover:bg-red-200 hover:text-red-700 transition"
+      aria-label="Clear uploaded file">
+      <i class="ri-close-line text-base"></i>
+      Clear
+    </button>
+  </div>
+</div>
 
   <div id="reportPreview" class="mt-4 text-center text-sm text-gray-500 italic">No file selected.</div>
 

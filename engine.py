@@ -27,6 +27,16 @@ def extract_patient_data(form, files):
     else:
         data["passport_b64"] = ""
 
+    # ✅ Include scanned report
+    scanned_report = files.get("report_scan")
+    if scanned_report:
+        print("✅ Report scan uploaded:", scanned_report.filename)
+        encoded = base64.b64encode(scanned_report.read()).decode("utf-8")
+        data["report_scan_b64"] = encoded
+    else:
+        print("⚠️ No report scan uploaded")
+        data["report_scan_b64"] = ""
+
     return data
 
 
@@ -58,6 +68,7 @@ def generate_report_html(data):
     history = ", ".join(data.get("history", []))
     notes = data.get("notes", "")
     passport_b64 = data.get("passport_b64", "")
+    report_b64 = data.get("report_scan_b64", "")
 
     passport_img_html = ""
     if passport_b64:
@@ -65,6 +76,15 @@ def generate_report_html(data):
         <div class='mt-4'>
             <p class='text-sm text-gray-500 mb-1'>Passport Photograph:</p>
             <img src="data:image/jpeg;base64,{passport_b64}" alt="Passport" class="w-32 h-32 object-cover rounded shadow" />
+        </div>
+        """
+
+    report_img_html = ""
+    if report_b64:
+        report_img_html = f"""
+        <div class='mt-4'>
+            <p class='text-sm text-gray-500 mb-1'>Scanned Report:</p>
+            <img src="data:image/jpeg;base64,{report_b64}" alt="Scanned Report" class="w-40 h-auto rounded shadow" />
         </div>
         """
 
@@ -78,6 +98,7 @@ def generate_report_html(data):
         <p><strong>Medical History:</strong> {history}</p>
         <p><strong>Additional Notes:</strong> {notes}</p>
         {passport_img_html}
+        {report_img_html}
 
         <div class='mt-6 flex flex-wrap gap-3'>
             <button onclick="editSection(1)" class='px-4 py-2 bg-gray-100 text-sm rounded hover:bg-gray-200'>
@@ -96,13 +117,13 @@ def generate_report_html(data):
                 Diagnose
             </button>
         </div>
-    </div>
 
-    <!-- 👈 BACK BUTTON -->
-    <div class='text-center mt-6'>
-        <button onclick="editSection(1)" class='back-btn inline-flex items-center gap-2 px-5 py-2 text-sm rounded-button bg-gray-800 text-white hover:bg-gray-700 transition'>
-            <i class='ri-arrow-left-line'></i> Back to Form
-        </button>
+        <!-- 👈 BACK BUTTON -->
+        <div class='text-center mt-6'>
+            <button onclick="editSection(1)" class='back-btn inline-flex items-center gap-2 px-5 py-2 text-sm rounded-button bg-gray-800 text-white hover:bg-gray-700 transition'>
+                <i class='ri-arrow-left-line'></i> Back to Form
+            </button>
+        </div>
     </div>
     """
 
