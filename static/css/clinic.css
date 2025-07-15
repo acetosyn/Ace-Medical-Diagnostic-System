@@ -101,4 +101,12 @@
   font-style: italic;
 }
 
-
+/* ✅ NEW: Image Preview Style */
+.upload-area img {
+  max-width: 100%;
+  max-height: 300px;
+  margin-top: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  object-fit: contain;
+}

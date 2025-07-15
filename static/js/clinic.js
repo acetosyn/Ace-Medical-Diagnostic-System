@@ -84,24 +84,35 @@ function downloadAsPDF(section) {
   });
 }
 
-// Manual handlers for file name preview (works regardless of visibility)
-function bindUploadPreview(inputId, labelId) {
+// Bind upload inputs to display file name + preview image
+function bindUploadPreview(inputId, labelId, previewId) {
   const input = document.getElementById(inputId);
   const label = document.getElementById(labelId);
+  const preview = document.getElementById(previewId);
 
   if (input && label) {
     input.addEventListener("change", () => {
       if (input.files?.length) {
-        label.textContent = "Selected: " + input.files[0].name;
+        const file = input.files[0];
+        label.textContent = "Selected: " + file.name;
+
+        if (preview && file.type.startsWith("image/")) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            preview.innerHTML = `<img src="${e.target.result}" class="max-w-xs mx-auto rounded-md mt-2 shadow" alt="Uploaded Image Preview">`;
+          };
+          reader.readAsDataURL(file);
+        }
       } else {
         label.textContent = "";
+        if (preview) preview.innerHTML = "";
       }
     });
   }
 }
 
-// Ensure DOM is ready (especially when injected dynamically)
+// Initialize upload preview handlers on DOM load
 window.addEventListener("load", () => {
-  bindUploadPreview("labUpload", "lab-file-name");
-  bindUploadPreview("reportUpload", "report-file-name");
+  bindUploadPreview("reportUpload", "report-file-name", "report-image-preview");
+  bindUploadPreview("labUpload", "lab-file-name", "lab-image-preview");
 });
