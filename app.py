@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 import engine
-
+import model #this uses run_diagnosis_engine(data)
 app = Flask(__name__)
 
 # Serve the main index layout
@@ -65,6 +65,19 @@ def generate_quick_report():
     form_data = engine.extract_quick_upload_data(request.form, request.files)
     html = engine.generate_quick_report_html(form_data)
     return html
+
+@app.route("/run_diagnosis", methods=["POST"])
+def run_diagnosis():
+    try:
+        data = request.get_json()
+        if not data:
+            return {"error": "No JSON received"}, 400
+
+        result = model.run_diagnosis_engine(data)
+        return result
+    except Exception as e:
+        return {"error": str(e)}, 500
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

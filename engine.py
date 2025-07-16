@@ -3,7 +3,6 @@ import datetime
 import base64
 
 
-
 def extract_patient_data(form, files):
     symptoms = form.getlist("symptoms")
     history = form.getlist("history")
@@ -57,7 +56,6 @@ def extract_quick_upload_data(form, files):
         data["lab_b64"] = ""
 
     return data
-
 
 
 def generate_report_html(data):
@@ -175,10 +173,3 @@ def generate_quick_report_html(data):
     </div>
 
     """
-
-def run_diagnosis_engine(data):
-    return {
-        "summary": "Diagnosis completed.",
-        "result": "Likely viral infection. Recommend rest and hydration.",
-        "confidence": "87%"
-    }
