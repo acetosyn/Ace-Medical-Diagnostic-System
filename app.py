@@ -1,4 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify, Response, stream_with_context
+from report_llm import stream_response as report_stream_response
+from chat_llm import stream_response as chat_stream_response
+
 import engine
 import model #this uses run_diagnosis_engine(data)
 app = Flask(__name__)
@@ -57,14 +60,13 @@ def register():
 @app.route("/generate_report", methods=["POST"])
 def generate_report():
     form_data = engine.extract_patient_data(request.form, request.files)
-    html = engine.generate_report_html(form_data)
-    return html
+    return jsonify(form_data)  # ❗️Return just the data dictionary, not wrapped in { "data": ..., "section": ... }
 
 @app.route("/generate_quick_report", methods=["POST"])
 def generate_quick_report():
     form_data = engine.extract_quick_upload_data(request.form, request.files)
-    html = engine.generate_quick_report_html(form_data)
-    return html
+    return jsonify(form_data)
+
 
 @app.route("/run_diagnosis", methods=["POST"])
 def run_diagnosis():
@@ -77,6 +79,38 @@ def run_diagnosis():
         return result
     except Exception as e:
         return {"error": str(e)}, 500
+    
+
+#LLM Chat on Clinic Report Page
+@app.route("/llm_chat", methods=["POST"])
+def llm_chat():
+    try:
+        prompt = request.json.get("prompt", "").strip()
+        if not prompt:
+            return jsonify({"error": "No prompt provided"}), 400
+
+        return Response(
+            stream_with_context(report_stream_response(prompt)),
+            content_type="text/plain"
+        )
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+#General Chat LLM on chat Page
+@app.route("/general_chat_llm", methods=["POST"])
+def general_chat_llm():
+    try:
+        prompt = request.json.get("prompt", "").strip()
+        if not prompt:
+            return jsonify({"error": "No prompt provided"}), 400
+
+        return Response(
+            stream_with_context(chat_stream_response(prompt)),
+            content_type="text/plain"
+        )
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 
 if __name__ == "__main__":

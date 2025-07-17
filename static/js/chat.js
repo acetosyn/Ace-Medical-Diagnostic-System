@@ -13,12 +13,14 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Store chat messages
   const chatHistory = [];
 
   function addMessage(sender, text) {
     const bubble = document.createElement("div");
     bubble.classList.add("chat-bubble-assistant");
+    if (sender === "user") {
+      bubble.classList.add("chat-bubble-user");
+    }
     bubble.textContent = text;
     chatMessages.appendChild(bubble);
     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -41,6 +43,44 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  async function fetchLLMResponse(prompt) {
+    try {
+      const response = await fetch("/general_chat_llm", {
+        method: "POST",
+        body: JSON.stringify({ prompt }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      if (!response.body) {
+        replaceTypingWithResponse("[Error]: No response stream from LLM.");
+        return;
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+      let fullText = "";
+
+      function read() {
+        reader.read().then(({ done, value }) => {
+          if (done) {
+            chatHistory.push({ role: "assistant", content: fullText });
+            return;
+          }
+          const chunk = decoder.decode(value, { stream: true });
+          fullText += chunk;
+          replaceTypingWithResponse(fullText);
+          read();
+        });
+      }
+
+      read();
+    } catch (err) {
+      replaceTypingWithResponse(`[LLM Error]: ${err.message}`);
+    }
+  }
+
   // ✅ Message submit
   chatForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -52,12 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
     messageInput.value = "";
 
     showTypingAnimation();
-
-    setTimeout(() => {
-      const reply = `Simulated response to: "${userMessage}"`;
-      replaceTypingWithResponse(reply);
-      chatHistory.push({ role: "bot", content: reply });
-    }, 1000);
+    fetchLLMResponse(userMessage);
   });
 
   // ✅ Optional handlers

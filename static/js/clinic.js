@@ -6,73 +6,109 @@ function generateReport(section) {
     formData.append("name", document.querySelector('input[placeholder="Enter patient\'s full name"]').value);
     formData.append("dob", document.querySelector('input[type="date"]').value);
     formData.append("sex", document.querySelector('select').value);
-    formData.append("notes", document.querySelector('textarea').value);
+    formData.append("notes", document.querySelector('textarea[name="notes"]').value);
 
-    // ✅ Include passport image
     const passportInput = document.getElementById("passportUpload");
-    if (passportInput && passportInput.files.length > 0) {
-      formData.append("passport", passportInput.files[0]);
-    }
+    if (passportInput?.files?.length) formData.append("passport", passportInput.files[0]);
 
-    // ✅ Include scanned report (lab image in part 1)
     const reportInput = document.getElementById("reportUpload");
-    if (reportInput && reportInput.files.length > 0) {
-      formData.append("report_scan", reportInput.files[0]);
-    }
+    if (reportInput?.files?.length) formData.append("report_scan", reportInput.files[0]);
 
-    // ✅ Gather symptoms and history
-    const symptoms = [];
-    const history = [];
-
+    const symptoms = [], history = [];
     document.querySelectorAll('input[type="checkbox"]').forEach((cb) => {
       if (cb.checked) {
         const label = cb.parentElement.textContent.trim();
-        if (cb.closest('[data-section="symptoms"]')) {
-          symptoms.push(label);
-        } else if (cb.closest('[data-section="history"]')) {
-          history.push(label);
-        }
+        if (cb.closest('[data-section="symptoms"]')) symptoms.push(label);
+        else if (cb.closest('[data-section="history"]')) history.push(label);
       }
     });
 
     symptoms.forEach(symptom => formData.append("symptoms", symptom));
     history.forEach(hx => formData.append("history", hx));
 
-    // 🔁 Submit to server
     fetch("/generate_report", {
       method: "POST",
       body: formData
     })
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById("part1").innerHTML = html;
-      });
+      .then(res => res.json())
+      .then(data => renderReport(section, data));
 
   } else if (section === 2) {
     const name = document.querySelector('#part2 input[type="text"]').value;
     formData.append("quick_name", name);
 
-    // ✅ Include lab scan image (for quick upload)
     const labInput = document.getElementById("labUpload");
-    if (labInput && labInput.files.length > 0) {
-      formData.append("lab_scan", labInput.files[0]);
-    }
+    if (labInput?.files?.length) formData.append("lab_scan", labInput.files[0]);
 
     fetch("/generate_quick_report", {
       method: "POST",
       body: formData
     })
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById("part2").innerHTML = html;
-      });
+      .then(res => res.json())
+      .then(data => renderReport(section, data));
   }
 }
 
+// 🧩 Inject report data into <template>
+function renderReport(section, data) {
+  const template = document.getElementById("reportTemplate");
+  const clone = template.content.cloneNode(true);
+  const part = document.getElementById(`part${section}`);
+  part.innerHTML = "";
+  part.appendChild(clone);
+
+  const card = part.querySelector(".report-card");
+
+  // Title
+  const title = section === 1 ? "Patient Report" : "Quick Upload Report";
+  card.querySelector(".report-title").textContent = title;
+
+  // Name
+  const name = data.name || data.quick_name || "N/A";
+  card.querySelector(".report-name").innerHTML = `<strong>Name:</strong> ${name}`;
+
+  // Details
+  const details = card.querySelector(".report-details");
+  if (section === 1) {
+    const html = `
+      <p><strong>Date of Birth:</strong> ${data.dob || "N/A"}</p>
+      <p><strong>Sex:</strong> ${data.sex || "N/A"}</p>
+      <p><strong>Symptoms:</strong> ${data.symptoms?.join(", ") || "None"}</p>
+      <p><strong>Medical History:</strong> ${data.history?.join(", ") || "None"}</p>
+      <p><strong>Additional Notes:</strong> ${data.notes || "None"}</p>
+    `;
+    details.innerHTML = html;
+  }
+
+  // Images
+  const imgContainer = card.querySelector(".report-images");
+
+  if (data.passport_b64) {
+    const img = document.createElement("img");
+    img.src = `data:image/jpeg;base64,${data.passport_b64}`;
+    img.alt = "Passport";
+    img.className = "w-32 h-32 object-cover rounded shadow mb-4";
+    imgContainer.appendChild(img);
+  }
+
+  const scanSrc = data.lab_b64 || data.report_scan_b64;
+  if (scanSrc) {
+    const img = document.createElement("img");
+    img.src = `data:image/jpeg;base64,${scanSrc}`;
+    img.alt = "Scanned Report or Lab";
+    img.className = "w-40 h-auto rounded shadow";
+    imgContainer.appendChild(img);
+  }
+
+  // Set section identifier for buttons
+  card.querySelectorAll("[data-section]").forEach(btn => {
+    btn.setAttribute("data-section", section);
+  });
+}
 
 // Reload page for editing
 function editSection(section) {
-  location.reload(); // Replace later with stateful edit if needed
+  location.reload();
 }
 
 // Simulate backend diagnosis
@@ -113,7 +149,6 @@ function downloadAsPDF(section) {
   });
 }
 
-
 // 📸 Preview uploaded image inside a container with file name
 function handleImageUpload(inputElement, previewId) {
   const preview = document.getElementById(previewId);
@@ -150,7 +185,7 @@ function clearUpload(inputId, previewId) {
   }
 }
 
-// Make key functions available to dynamically inserted buttons
+// Make key functions globally available
 window.downloadAsPDF = downloadAsPDF;
 window.downloadAsPNG = downloadAsPNG;
 window.editSection = editSection;

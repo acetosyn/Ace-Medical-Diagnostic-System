@@ -177,4 +177,3 @@ function collapseMobileMenu() {
 }
 
 document.querySelector(".mobile-menu-button")?.addEventListener("click", toggleMobileMenu);
-

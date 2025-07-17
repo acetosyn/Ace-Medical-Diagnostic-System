@@ -15,14 +15,15 @@ HEADERS = {"Authorization": f"Bearer {HF_API_KEY}"}
 
 def run_diagnosis_engine(data):
     """
-    Uses the Hugging Face BLIP-MIMIC-CXR model to generate a radiology report
-    from a base64-encoded image and prompt.
+    Sends a base64-encoded X-ray image and optional prompt to Hugging Face BLIP-MIMIC-CXR model
+    to generate a diagnostic report.
     """
-    b64_img = data.get("report_scan_b64")
-    prompt = data.get("notes", "examination: chest x-ray\nindication: rule out pneumonia.")
+    # 🔍 Accept multiple image sources
+    b64_img = data.get("report_scan_b64") or data.get("lab_b64") or data.get("passport_b64")
+    prompt = data.get("notes", "Examination: chest x-ray.\nIndication: rule out pneumonia.")
 
     if not b64_img:
-        return {"error": "No scan image provided."}
+        return {"error": "No base64 scan image provided."}
 
     try:
         image_bytes = base64.b64decode(b64_img)
@@ -38,12 +39,20 @@ def run_diagnosis_engine(data):
         if response.status_code == 200:
             result = response.json()
             return {
+                "status": "success",
                 "summary": "Radiology report generated successfully.",
                 "result": result.get("generated_text", result),
-                "confidence": "⚠️ Confidence scores not included. Clinical review required."
+                "confidence": "⚠️ Confidence scores not provided. Human validation required."
             }
+
         else:
-            return {"error": f"HuggingFace API error: {response.text}"}
+            return {
+                "status": "error",
+                "error": f"Hugging Face API returned {response.status_code}: {response.text}"
+            }
 
     except Exception as e:
-        return {"error": str(e)}
+        return {
+            "status": "error",
+            "error": f"Exception occurred during diagnosis: {str(e)}"
+        }
