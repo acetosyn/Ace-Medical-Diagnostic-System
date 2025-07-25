@@ -13,6 +13,7 @@ def home():
 
 # Serve inner pages as partials for AJAX/dynamic injection
 @app.route("/home.html")
+
 def home_partial():
     return render_template("home.html")
 

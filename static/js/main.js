@@ -2,7 +2,7 @@
 
 const pageContent = document.getElementById("pageContent");
 
-// Load a new HTML page
+// Load a new HTML page dynamically
 async function loadPage(url) {
   try {
     const response = await fetch(url);
@@ -16,19 +16,23 @@ async function loadPage(url) {
       pageContent.classList.remove("fade-slide-out");
       pageContent.classList.add("fade-slide-in");
 
-      // ✅ Inject page-specific JS if needed
+      // Inject page-specific JS and rebind initializers
       if (url.includes("clinic")) {
         loadScript("/static/js/clinic.js", () => {
-          // 👇 Rebind functions after report is injected dynamically
           window.downloadAsPDF = downloadAsPDF;
           window.downloadAsPNG = downloadAsPNG;
           window.editSection = editSection;
           window.diagnoseBackend = diagnoseBackend;
         });
+        loadScript("/static/js/llm.js");
       }
+
       if (url.includes("chat")) {
-        loadScript("/static/js/chat.js");
+        loadScript("/static/js/chat.js", () => {
+          if (typeof initChat === "function") initChat();
+        });
       }
+
       if (url.includes("home")) {
         loadScript("/static/js/home.js");
       }
@@ -42,12 +46,10 @@ async function loadPage(url) {
   }
 }
 
-// ✅ Utility function to load a script dynamically
+// Utility to load JS dynamically
 function loadScript(src, callback) {
   const existing = document.querySelector(`script[src="${src}"]`);
-  if (existing) {
-    existing.remove(); // Force reload if already present
-  }
+  if (existing) existing.remove(); // Force reload if already present
 
   const script = document.createElement("script");
   script.src = src;
@@ -57,7 +59,6 @@ function loadScript(src, callback) {
   };
   document.body.appendChild(script);
 }
-
 
 // Highlight nav links
 function updateActiveNav(path) {
@@ -71,7 +72,7 @@ function updateActiveNav(path) {
   });
 }
 
-// Collapse mobile menu (if open)
+// Collapse mobile menu
 function collapseMobileMenu() {
   const mobileMenu = document.getElementById("mobileMenu");
   if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
@@ -79,7 +80,7 @@ function collapseMobileMenu() {
   }
 }
 
-// Handle internal links
+// Handle internal navigation links
 document.addEventListener("click", function (e) {
   const link = e.target.closest("a[href^='/']");
   if (link && !link.hasAttribute("download") && !link.hasAttribute("target")) {
@@ -90,12 +91,12 @@ document.addEventListener("click", function (e) {
       loadPage(`${page}.html`);
       updateActiveNav(href);
       history.pushState({ path: href }, "", href);
-      collapseMobileMenu();  // 🔁 collapse menu if clicked
+      collapseMobileMenu();
     }
   }
 });
 
-// Handle hash links (e.g., #contact)
+// Handle hash links
 document.addEventListener("click", function (e) {
   const link = e.target.closest("a[href^='#']");
   if (link) {
@@ -104,76 +105,44 @@ document.addEventListener("click", function (e) {
     if (target) {
       e.preventDefault();
       target.scrollIntoView({ behavior: "smooth" });
-      collapseMobileMenu(); // 🔁 collapse on scroll
+      collapseMobileMenu();
     }
   }
 });
 
-// On load
+// On initial load
 window.addEventListener("DOMContentLoaded", () => {
   const path = location.pathname === "/" ? "home" : location.pathname.slice(1);
   loadPage(`${path}.html`);
   updateActiveNav(location.pathname);
 });
 
-// Back/forward nav
+// Back/forward navigation
 window.addEventListener("popstate", () => {
   const path = location.pathname === "/" ? "home" : location.pathname.slice(1);
   loadPage(`${path}.html`);
   updateActiveNav(location.pathname);
 });
 
-// Toggle mobile menu
-// Slide animation for mobile menu
+// Mobile menu toggle
 function toggleMobileMenu() {
   const menu = document.getElementById("mobileMenu");
-
   if (!menu) return;
 
   if (menu.classList.contains("hidden")) {
-    // Show with animation
     menu.classList.remove("hidden", "slide-exit", "slide-exit-active");
     menu.classList.add("slide-enter");
-
-    requestAnimationFrame(() => {
-      menu.classList.add("slide-enter-active");
-    });
-
-    // Auto-collapse after 5 seconds
+    requestAnimationFrame(() => menu.classList.add("slide-enter-active"));
     setTimeout(() => collapseMobileMenu(), 5000);
-
   } else {
-    // Hide with animation
     menu.classList.remove("slide-enter", "slide-enter-active");
     menu.classList.add("slide-exit");
-
-    requestAnimationFrame(() => {
-      menu.classList.add("slide-exit-active");
-    });
-
+    requestAnimationFrame(() => menu.classList.add("slide-exit-active"));
     setTimeout(() => {
       menu.classList.add("hidden");
       menu.classList.remove("slide-exit", "slide-exit-active");
     }, 300);
   }
-}
-
-function collapseMobileMenu() {
-  const menu = document.getElementById("mobileMenu");
-
-  if (!menu || menu.classList.contains("hidden")) return;
-
-  menu.classList.remove("slide-enter", "slide-enter-active");
-  menu.classList.add("slide-exit");
-
-  requestAnimationFrame(() => {
-    menu.classList.add("slide-exit-active");
-  });
-
-  setTimeout(() => {
-    menu.classList.add("hidden");
-    menu.classList.remove("slide-exit", "slide-exit-active");
-  }, 300);
 }
 
 document.querySelector(".mobile-menu-button")?.addEventListener("click", toggleMobileMenu);

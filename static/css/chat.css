@@ -65,7 +65,8 @@
 /*==============================
   💬 Messages Scroll Area
 ==============================*/
-#chatMessages {
+#chatMessages,
+#llm-chat-output {
   flex: 1;
   padding: 1.5rem;
   display: flex;
@@ -76,14 +77,49 @@
   border-top: 1px solid var(--light-gray);
 }
 
-/* Assistant Chat Bubble */
-.chat-bubble-assistant {
-  background-color: #f0f4ff;
-  padding: 1rem;
+/*==============================
+  Chat Bubbles (Unified)
+==============================*/
+.user-message,
+.chat-bubble-user {
+  align-self: flex-end;
+  background-color: #e0f7fa;
+  padding: 0.8rem 1rem;
   border-radius: 12px;
   max-width: 80%;
   color: #1e293b;
   font-size: 0.95rem;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  line-height: 1.4;
+  text-align: right;
+}
+
+.assistant-message,
+.chat-bubble-assistant {
+  align-self: flex-start;
+  background-color: #f0f4ff;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  max-width: 80%;
+  color: #1e293b;
+  font-size: 0.95rem;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  line-height: 1.4;
+}
+
+/* Mini Chat Bubble Styles for Clinic Page */
+#llm-chat-output .user-message {
+  max-width: 75%;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+#llm-chat-output .assistant-message {
+  max-width: 75%;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
 }
 
 /*==============================
@@ -175,4 +211,56 @@
   #chatForm textarea {
     width: 100%;
   }
+}
+
+/* CHAT CSS */
+
+.chat-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.user-row {
+  justify-content: flex-end;
+}
+
+.bot-row {
+  justify-content: flex-start;
+}
+
+.chat-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  position: relative;
+  top: -8px; /* raise avatar slightly above bubble */
+  flex-shrink: 0;
+}
+
+.user-avatar {
+  order: 2;           /* places user avatar on far right */
+  margin-left: 0.5rem;
+}
+
+.bot-avatar {
+  order: 1;            /* places bot avatar on far left */
+  margin-right: 0.5rem;
+}
+
+.chat {
+  max-width: 75%;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  background-color: #f0f4ff;
+  color: #1e293b;
+}
+
+.chat-bubble-user {
+  background-color: #e0f7fa;
+  text-align: right;
 }
