@@ -1,0 +1,313 @@
+<!-- clinic.html -->
+<section class="py-16 bg-gray-50 page-slide-in">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Page Title -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">ACE Clinical Interface</h2>
+      <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+        Begin patient data entry or upload lab reports directly for instant diagnostic support.
+      </p>
+    </div>
+
+    <!-- === PART 1: Step-Based Intake === -->
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-20" id="part1">
+      <!-- Progress Steps -->
+      <div class="border-b border-gray-200">
+        <div class="px-6 py-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <div class="w-8 h-8 rounded-full flex items-center justify-center border-2 progress-step completed">
+                <i class="ri-check-line text-sm"></i>
+              </div>
+              <div class="progress-line active w-12 mx-2"></div>
+              <div class="w-8 h-8 rounded-full flex items-center justify-center border-2 progress-step active">2</div>
+              <div class="progress-line w-12 mx-2"></div>
+              <div class="w-8 h-8 rounded-full flex items-center justify-center border-2 progress-step">3</div>
+            </div>
+          </div>
+          <div class="flex justify-between mt-2 text-sm">
+            <span class="text-primary font-medium">Patient Info</span>
+            <span class="text-primary font-medium">Symptoms & History</span>
+            <span class="text-gray-500">Review</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Content -->
+      <div class="p-6">
+        <h3 class="text-xl font-semibold text-gray-900 mb-4">Step 1: Patient Information</h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div class="max-w-xl">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Patient Name</label>
+            <input type="text" class="form-input w-full" placeholder="Enter patient's full name">
+          </div>
+          <div class="max-w-xs">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+            <input type="date" class="form-input w-full">
+          </div>
+          <div class="max-w-xs">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Sex</label>
+            <select class="form-input w-full">
+              <option value="">Select gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+        <div class="max-w-xs">
+  <label class="block text-sm font-medium text-gray-700 mb-1">Passport Photograph</label>
+  <input type="file" accept="image/*" id="passportUpload" class="form-input w-full">
+</div>
+
+
+          <!-- Symptoms -->
+    <h3 class="text-xl font-semibold text-gray-900 mt-8 mb-4">Step 2: Symptoms & Medical History</h3>
+
+   <div class="mb-6 max-w-3xl" data-section="symptoms">
+  <label class="block text-sm font-medium text-gray-700 mb-2">Patient Symptoms</label>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-3 bg-gray-50 p-4 rounded-md mb-4">
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Fever" class="custom-checkbox"> <span>Fever</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Cough" class="custom-checkbox"> <span>Cough</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Fatigue" class="custom-checkbox"> <span>Fatigue</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Headache" class="custom-checkbox"> <span>Headache</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Chest Pain" class="custom-checkbox"> <span>Chest Pain</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Joint Pain" class="custom-checkbox"> <span>Joint Pain</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Dizziness" class="custom-checkbox"> <span>Dizziness</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Shortness of Breath" class="custom-checkbox"> <span>Shortness of Breath</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Nausea" class="custom-checkbox"> <span>Nausea</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Sore Throat" class="custom-checkbox"> <span>Sore Throat</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Skin Rash" class="custom-checkbox"> <span>Skin Rash</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Muscle Pain" class="custom-checkbox"> <span>Muscle Pain</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Back Pain" class="custom-checkbox"> <span>Back Pain</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Runny Nose" class="custom-checkbox"> <span>Runny Nose</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="symptoms" value="Loss of Taste/Smell" class="custom-checkbox"> <span>Loss of Taste/Smell</span></label>
+  </div>
+
+  <label class="block text-sm font-medium text-gray-700 mb-2">Additional Notes</label>
+  <textarea rows="3" name="notes" class="form-input w-full max-w-xl" placeholder="Describe symptoms in detail..."></textarea>
+</div>
+
+
+<!-- Medical History -->
+<div class="mb-6 max-w-3xl" data-section="history">
+  <label class="block text-sm font-medium text-gray-700 mb-2">Medical History</label>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-3 bg-gray-50 p-4 rounded-md">
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="history" value="Hypertension" class="custom-checkbox"> <span>Hypertension</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="history" value="Diabetes" class="custom-checkbox"> <span>Diabetes</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="history" value="Asthma" class="custom-checkbox"> <span>Asthma</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="history" value="Depression" class="custom-checkbox"> <span>Depression</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="history" value="Heart Disease" class="custom-checkbox"> <span>Heart Disease</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="history" value="Cancer" class="custom-checkbox"> <span>Cancer</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="history" value="Kidney Disease" class="custom-checkbox"> <span>Kidney Disease</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="history" value="Stroke" class="custom-checkbox"> <span>Stroke</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="history" value="Anxiety" class="custom-checkbox"> <span>Anxiety</span></label>
+    <label class="inline-flex items-center space-x-2 text-sm"><input type="checkbox" name="history" value="Thyroid Disorders" class="custom-checkbox"> <span>Thyroid Disorders</span></label>
+  </div>
+</div>
+
+
+<!-- Upload Scanned Report -->
+<div class="mb-6 max-w-lg">
+  <label class="block text-sm font-medium text-gray-700 mb-2">Upload Scanned Reports (Optional)</label>
+
+  <div class="relative border-2 border-dashed rounded-lg p-6 text-center bg-gray-50 hover:bg-gray-100">
+    <p class="text-gray-500">Drag & drop or click to upload</p>
+
+    <!-- ✅ Important: needed for Flask to receive file -->
+    <input 
+      type="file" 
+      id="reportUpload" 
+      name="report_scan"
+      accept="image/*"
+      onchange="handleImageUpload(this, 'reportPreview')"
+      class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+      title="Click or drag file to upload" />
+  </div>
+
+  <div id="reportPreview" class="mt-4 text-center text-sm text-gray-500 italic">
+    No file selected.
+  </div>
+
+  <div class="mt-3 flex justify-center">
+    <button onclick="clearUpload('reportUpload', 'reportPreview')"
+      class="clear-btn inline-flex items-center gap-1 px-3 py-1.5 rounded-button bg-red-100 text-red-600 hover:bg-red-200 hover:text-red-700 transition"
+      aria-label="Clear uploaded file">
+      <i class="ri-close-line text-base"></i>
+      Clear
+    </button>
+  </div>
+</div>
+
+  <div id="reportPreview" class="mt-4 text-center text-sm text-gray-500 italic">No file selected.</div>
+
+  <div class="mt-3 flex justify-center">
+    <button onclick="clearUpload('reportUpload', 'reportPreview')"
+      class="clear-btn inline-flex items-center gap-1 px-3 py-1.5 rounded-button bg-red-100 text-red-600 hover:bg-red-200 hover:text-red-700 transition"
+      aria-label="Clear uploaded file">
+      <i class="ri-close-line text-base"></i>
+    </button>
+  </div>
+</div>
+
+
+    <!-- CTA -->
+    <div class="mt-8 border-t border-gray-200 pt-6">
+      <div class="flex flex-col sm:flex-row sm:justify-between gap-4">
+        <!-- Back Button -->
+        <button
+          class="px-4 py-2 bg-white border border-gray-300 text-sm text-gray-700 rounded-button hover:bg-gray-50 w-full sm:w-auto">
+          <i class="ri-arrow-left-line mr-1"></i> Back
+        </button>
+
+        <!-- Save & Continue -->
+        <div class="flex flex-col sm:flex-row gap-3 sm:gap-3 w-full sm:w-auto">
+          <button
+            class="px-4 py-2 bg-white border border-gray-300 text-sm text-gray-700 rounded-button hover:bg-gray-50 w-full sm:w-auto">
+            Save Draft
+          </button>
+          <button
+            class="px-6 py-2 bg-primary text-white rounded-button hover:bg-primary/90 text-sm w-full sm:w-auto"
+            onclick="generateReport(1)">
+            Continue <i class="ri-arrow-right-line ml-2"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+        <div class="text-center mt-8 hidden" id="diagnose1Btn">
+          <button class="mt-4 px-6 py-2 bg-secondary text-white rounded-button hover:bg-secondary/90"
+            onclick="diagnoseBackend(1)">
+            Diagnose
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- === PART 2: Quick Upload Panel === -->
+    <div class="bg-white rounded-lg shadow-sm p-6" id="part2">
+      <h3 class="text-xl font-semibold text-gray-900 mb-4">Quick Diagnosis Upload</h3>
+
+      <div class="mb-6 max-w-md">
+        <label class="block text-sm font-medium text-gray-700 mb-2">Patient Name</label>
+        <input type="text" class="form-input w-full" placeholder="Enter patient name">
+      </div>
+
+      <!-- Upload Lab Scan -->
+      <div class="mb-6 max-w-lg">
+        <label class="block text-sm font-medium text-gray-700 mb-2">Upload Lab Scan</label>
+        <div class="relative border-2 border-dashed rounded-lg p-6 text-center bg-gray-50 hover:bg-gray-100">
+          <p class="text-gray-500">Drag & drop or click to upload</p>
+          <input type="file" id="labUpload" accept="image/*" onchange="handleImageUpload(this, 'labPreview')"
+            class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" title="Click or drag file to upload" />
+        </div>
+        <div id="labPreview" class="mt-4 text-center text-sm text-gray-500 italic">No file selected.</div>
+        <div class="mt-2 text-center">
+
+            <button onclick="clearUpload('labUpload', 'labPreview')"
+      class="clear-btn"
+      aria-label="Clear uploaded file">
+      <i class="ri-close-line text-base"></i>
+    </button>
+
+      
+
+      <div class="text-center mt-6">
+        <button class="mt-4 px-6 py-2 bg-primary text-white rounded-button hover:bg-primary/90"
+          onclick="generateReport(2)">
+          Submit
+        </button>
+      </div>
+
+      <div class="text-center mt-8 hidden" id="diagnose2Btn">
+        <button class="mt-4 px-6 py-2 bg-secondary text-white rounded-button hover:bg-secondary/90"
+          onclick="diagnoseBackend(2)">
+          Diagnose
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+<!-- 🔒 Hidden Template for Rendering Report Card -->
+<template id="reportTemplate">
+  <div class="report-card p-6 rounded-lg bg-white shadow-md">
+    <h3 class="report-title text-lg font-semibold text-gray-800 mb-2"></h3>
+
+    <p class="report-name"><strong>Name:</strong></p>
+
+    <div class="report-details"></div>
+
+    <div class="report-images mt-4"></div>
+
+    <div class="mt-6 flex flex-wrap gap-3">
+      <button class="edit-btn px-4 py-2 bg-gray-100 text-sm rounded hover:bg-gray-200" data-section="__SECTION__">
+        <i class="ri-edit-2-line mr-1"></i>Edit Details
+      </button>
+      <button class="pdf-btn px-4 py-2 bg-gray-100 text-sm rounded hover:bg-gray-200" data-section="__SECTION__">
+        <i class="ri-file-pdf-line mr-1"></i>Download PDF
+      </button>
+      <button class="png-btn px-4 py-2 bg-gray-100 text-sm rounded hover:bg-gray-200" data-section="__SECTION__">
+        <i class="ri-image-line mr-1"></i>Download PNG
+      </button>
+    </div>
+
+    <!-- 🧠 AI Tools -->
+    <div class="mt-10 border-t pt-6">
+      <h4 class="text-lg font-semibold text-gray-800 mb-4">🧠 AI Tools for Report</h4>
+      <div class="flex flex-wrap gap-4 mb-6">
+        <button onclick="runLLM('simplify')" class="px-4 py-2 bg-blue-100 text-blue-800 rounded-button hover:bg-blue-200 transition">🧠 Simplify Report</button>
+        <button onclick="runLLM('translate')" class="px-4 py-2 bg-green-100 text-green-800 rounded-button hover:bg-green-200 transition">🌐 Translate Report</button>
+        <button onclick="runLLM('map_icd')" class="px-4 py-2 bg-yellow-100 text-yellow-800 rounded-button hover:bg-yellow-200 transition">📋 Map to Disease / ICD</button>
+      </div>
+
+      <!-- 💬 Chat Interface -->
+      <div class="bg-gray-50 rounded-lg p-4 shadow-sm">
+        <h5 class="text-sm text-gray-700 mb-2">💬 Ask a Question About This Report</h5>
+
+        <!-- Chat Output -->
+        <div id="llm-chat-output" class="chat-output bg-white p-3 rounded-md shadow-inner max-h-60 overflow-y-auto mb-3">
+          <!-- Messages will be injected here by llm.js -->
+        </div>
+
+        <!-- Input & Send -->
+        <div class="flex items-start gap-2">
+          <textarea 
+            id="llm-chat-input" 
+            rows="2" 
+            class="form-input flex-1" 
+            placeholder="e.g. What does this finding suggest?"></textarea>
+          <button 
+            id="llm-send-btn" 
+            class="bg-secondary text-white px-4 py-2 rounded-button hover:bg-secondary/90">
+            Send
+          </button>
+        </div>
+      </div>
+
+      <div class="text-center mt-6">
+        <button class="diagnose-btn px-6 py-2 bg-secondary text-white rounded-button hover:bg-secondary/90" data-section="__SECTION__">
+          Diagnose
+        </button>
+      </div>
+
+      <div class="text-center mt-6">
+        <button class="back-btn inline-flex items-center gap-2 px-5 py-2 text-sm rounded-button bg-gray-800 text-white hover:bg-gray-700 transition" data-section="__SECTION__">
+          <i class="ri-arrow-left-line"></i> Back to Form
+        </button>
+      </div>
+    </div>
+
+    </template>
+
+    </section>
+
+<!-- html2canvas & jsPDF -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/clinic.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="{{ url_for('static', filename='js/clinic.js') }}"></script>
+<script src="{{ url_for('static', filename='js/clinic2.js') }}"></script>
+<script src="{{url_for('static', filename= 'js/llm.js')}}"></script>

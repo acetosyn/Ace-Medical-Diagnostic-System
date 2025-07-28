@@ -3,24 +3,27 @@ function generateReport(section) {
   const formData = new FormData();
 
   if (section === 1) {
-    formData.append("name", document.querySelector('input[placeholder="Enter patient\'s full name"]').value);
-    formData.append("dob", document.querySelector('input[type="date"]').value);
-    formData.append("sex", document.querySelector('select').value);
+    // Patient details
+    formData.append("name", document.getElementById("part1").querySelector('input[placeholder="Enter patient\'s full name"]').value);
+    formData.append("dob", document.getElementById("part1").querySelector('input[type="date"]').value);
+    formData.append("sex", document.getElementById("part1").querySelector('select').value);
     formData.append("notes", document.querySelector('textarea[name="notes"]').value);
 
+    // Passport
     const passportInput = document.getElementById("passportUpload");
     if (passportInput?.files?.length) formData.append("passport", passportInput.files[0]);
 
+    // Report scan
     const reportInput = document.getElementById("reportUpload");
     if (reportInput?.files?.length) formData.append("report_scan", reportInput.files[0]);
 
+    // Symptoms and history
     const symptoms = [], history = [];
-    document.querySelectorAll('input[type="checkbox"]').forEach((cb) => {
-      if (cb.checked) {
-        const label = cb.parentElement.textContent.trim();
-        if (cb.closest('[data-section="symptoms"]')) symptoms.push(label);
-        else if (cb.closest('[data-section="history"]')) history.push(label);
-      }
+    document.querySelectorAll('[data-section="symptoms"] input[type="checkbox"]').forEach(cb => {
+      if (cb.checked) symptoms.push(cb.value);
+    });
+    document.querySelectorAll('[data-section="history"] input[type="checkbox"]').forEach(cb => {
+      if (cb.checked) history.push(cb.value);
     });
 
     symptoms.forEach(symptom => formData.append("symptoms", symptom));
@@ -49,7 +52,7 @@ function generateReport(section) {
   }
 }
 
-// 🧩 Inject report data into <template>
+// Inject report data into <template>
 function renderReport(section, data) {
   const template = document.getElementById("reportTemplate");
   const clone = template.content.cloneNode(true);
@@ -100,15 +103,42 @@ function renderReport(section, data) {
     imgContainer.appendChild(img);
   }
 
-  // Set section identifier for buttons
+  // Attach actions to buttons
   card.querySelectorAll("[data-section]").forEach(btn => {
     btn.setAttribute("data-section", section);
   });
+
+  card.querySelectorAll(".pdf-btn").forEach(btn => {
+    btn.addEventListener("click", () => downloadAsPDF(section));
+  });
+
+  card.querySelectorAll(".png-btn").forEach(btn => {
+    btn.addEventListener("click", () => downloadAsPNG(section));
+  });
+
+  card.querySelectorAll(".diagnose-btn").forEach(btn => {
+    btn.addEventListener("click", () => diagnoseBackend(section));
+  });
+
+  card.querySelectorAll(".back-btn").forEach(btn => {
+    btn.addEventListener("click", () => loadClinicForm(section));
+  });
+
+  // Initialize LLM chat once
+  if (typeof initLLMChat === "function" && !card.classList.contains("llm-initialized")) {
+    initLLMChat();
+    card.classList.add("llm-initialized");
+  }
 }
 
-// Reload page for editing
-function editSection(section) {
-  location.reload();
+// Restore the original intake or quick upload form
+function loadClinicForm(section) {
+  const part = document.getElementById(`part${section}`);
+  const template = document.getElementById(`part${section}-template`);
+  if (part && template) {
+    part.innerHTML = "";
+    part.appendChild(template.content.cloneNode(true));
+  }
 }
 
 // Simulate backend diagnosis
@@ -149,7 +179,7 @@ function downloadAsPDF(section) {
   });
 }
 
-// 📸 Preview uploaded image inside a container with file name
+// Preview uploaded image
 function handleImageUpload(inputElement, previewId) {
   const preview = document.getElementById(previewId);
   if (!inputElement.files?.length || !preview) return;
@@ -175,7 +205,8 @@ function handleImageUpload(inputElement, previewId) {
   reader.readAsDataURL(file);
 }
 
-// 🧼 Clear image and reset preview container
+// Other existing code above....
+// Clear upload and preview
 function clearUpload(inputId, previewId) {
   const input = document.getElementById(inputId);
   const preview = document.getElementById(previewId);
@@ -185,8 +216,44 @@ function clearUpload(inputId, previewId) {
   }
 }
 
-// Make key functions globally available
+// Make functions globally available
 window.downloadAsPDF = downloadAsPDF;
 window.downloadAsPNG = downloadAsPNG;
-window.editSection = editSection;
 window.diagnoseBackend = diagnoseBackend;
+
+// The Parts I added are below
+
+// Restore the original intake or quick upload form (SPA style)
+function loadClinicForm(section) {
+  const part = document.getElementById(`part${section}`);
+  const template = document.getElementById(`part${section}-template`);
+  if (part && template) {
+    part.innerHTML = "";
+    part.appendChild(template.content.cloneNode(true));
+
+    // Test block: confirm restoration in console
+    console.log(`Form for Part ${section} restored from template.`);
+  } else {
+    console.warn(`No template found for Part ${section}`);
+  }
+}
+
+
+// Auto-save original Part 1 and Part 2 content into templates on first load
+document.addEventListener("DOMContentLoaded", () => {
+  const part1 = document.getElementById("part1");
+  const part2 = document.getElementById("part2");
+
+  const template1 = document.getElementById("part1-template");
+  const template2 = document.getElementById("part2-template");
+
+  if (part1 && template1 && !template1.content.hasChildNodes()) {
+    template1.content.appendChild(part1.cloneNode(true));
+    console.log("Saved original Part 1 into part1-template");
+  }
+
+  if (part2 && template2 && !template2.content.hasChildNodes()) {
+    template2.content.appendChild(part2.cloneNode(true));
+    console.log("Saved original Part 2 into part2-template");
+  }
+});
