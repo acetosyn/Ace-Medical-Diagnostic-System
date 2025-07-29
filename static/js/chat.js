@@ -82,56 +82,55 @@ function initChat() {
     }
   }
 
- // Main function to send message
-async function sendMessage() {
-  const userMessage = messageInput.value.trim();
-  if (!userMessage) return;
+  // Main function to send message
+  async function sendMessage() {
+    const userMessage = messageInput.value.trim();
+    if (!userMessage) return;
 
-  displayUserMessage(userMessage);
-  chatHistory.push({ role: "user", content: userMessage });
-  messageInput.value = "";
+    displayUserMessage(userMessage);
+    chatHistory.push({ role: "user", content: userMessage });
+    messageInput.value = "";
 
-  const typingBubble = createTypingBubble();
+    const typingBubble = createTypingBubble();
 
-  try {
-    const response = await fetch("/general_chat_llm", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt: userMessage })
-    });
+    try {
+      const response = await fetch("/general_chat_llm", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: userMessage })
+      });
 
-    if (!response.ok || !response.body) throw new Error("No response from LLM.");
+      if (!response.ok || !response.body) throw new Error("No response from LLM.");
 
-    chatMessages.removeChild(typingBubble);
-    const reader = response.body.getReader();
-    const decoder = new TextDecoder();
+      chatMessages.removeChild(typingBubble);
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
 
-    const botMsgDiv = displayBotMessage();
-    let fullBotResponse = "";
+      const botMsgDiv = displayBotMessage();
+      let fullBotResponse = "";
 
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
 
-      const chunk = decoder.decode(value, { stream: true });
-      fullBotResponse += chunk;
+        const chunk = decoder.decode(value, { stream: true });
+        fullBotResponse += chunk;
 
-      const isSmallTalk = fullBotResponse.length < 100 &&
-        /(I'm fine|Still doing well|your friendly medical & diagnostic assistant)/i.test(fullBotResponse);
+        const isSmallTalk = fullBotResponse.length < 100 &&
+          /(I'm fine|Still doing well|your friendly medical & diagnostic assistant)/i.test(fullBotResponse);
 
-      await typeWriterEffect(botMsgDiv, chunk, isSmallTalk ? 5 : 15);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
+        await typeWriterEffect(botMsgDiv, chunk, isSmallTalk ? 5 : 15);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      chatHistory.push({ role: "assistant", content: fullBotResponse });
+    } catch (err) {
+      console.error("❌ Error:", err);
+      chatMessages.removeChild(typingBubble);
+      const errorDiv = displayBotMessage();
+      errorDiv.textContent = "⚠️ Sorry, something went wrong.";
     }
-
-    chatHistory.push({ role: "assistant", content: fullBotResponse });
-  } catch (err) {
-    console.error("❌ Error:", err);
-    chatMessages.removeChild(typingBubble);
-    const errorDiv = displayBotMessage();
-    errorDiv.textContent = "⚠️ Sorry, something went wrong.";
   }
-}
-
 
   // Handle submit and Enter key
   chatForm.addEventListener("submit", (e) => {
@@ -147,10 +146,16 @@ async function sendMessage() {
   });
 
   fileBtn?.addEventListener("click", () => fileInput?.click());
-  micBtn?.addEventListener("click", () => alert("🎙️ Mic input not yet implemented."));
-  ttsBtn?.addEventListener("click", () => alert("🔊 TTS not yet implemented."));
 
-  // Show initial ACE welcome message
+  // ✅ Hooked in by tts.js for mic → chat input
+  window.handleVoiceInput = function (transcript) {
+    const input = document.getElementById("messageInput");
+    if (!input) return;
+    input.value = transcript;
+    document.getElementById("chatForm").dispatchEvent(new Event("submit"));
+  };
+
+  // Initial ACE welcome message
   function showInitialMessage() {
     chatMessages.innerHTML = "";
 

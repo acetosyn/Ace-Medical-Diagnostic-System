@@ -1,5 +1,3 @@
-const { useLayoutEffect } = require("react");
-
 // Navbar toggle for mobile menu
 document.addEventListener('DOMContentLoaded', function () {
   const mobileMenuButton = document.querySelector('.mobile-menu-button');
@@ -116,7 +114,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
-
 
 // Animate Hero Section on Load
 document.addEventListener('DOMContentLoaded', function () {

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, Response, stream_with_context
 from report_llm import stream_response as report_stream_response
 from chat_llm import stream_response as chat_stream_response
+from extract_summary import summarize_bot_responses
 
 import engine
 import model #this uses run_diagnosis_engine(data)
@@ -111,7 +112,26 @@ def general_chat_llm():
         )
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
 
+# Optional: Summarize previous conversation history
+@app.route("/summarize_history", methods=["POST"])
+def summarize_history():
+    try:
+        history = request.json.get("history", [])
+        if not history:
+            return jsonify({"summary": "No previous conversations to summarize."})
+
+        # Format turns as alternating speaker labels
+        formatted = []
+        for i, msg in enumerate(history):
+            role = "You" if i % 2 == 0 else "ACE"
+            formatted.append(f"{role}: {msg.strip()}")
+
+        summary = summarize_bot_responses(formatted)
+        return jsonify({"summary": summary})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == "__main__":

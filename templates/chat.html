@@ -36,20 +36,43 @@
       </div>
     </div>
 
+    <!-- 🐞 TTS Debug Display (for dev only) -->
+<div id="tts-debug" style="font-size: 12px; color: #999; padding: 4px 12px;"></div>
+
     <!-- Input Area -->
     <div class="chat-input-wrapper">
       <form id="chatForm">
-        <div class="chat-tools">
+        <div class="chat-tools space-x-2 flex items-center">
+          <!-- Hidden File Upload -->
           <input type="file" id="fileInput" class="hidden" accept=".pdf,.jpg,.jpeg,.png" />
-          <button type="button"><i class="ri-attachment-2"></i></button>
-          <button type="button"><i class="ri-mic-line"></i></button>
-          <button type="button"><i class="ri-volume-up-line"></i></button>
+
+          <!-- Attachment Button -->
+          <button type="button" title="Attach File">
+            <i class="ri-attachment-2" aria-label="Attach File"></i>
+          </button>
+
+          <!-- Mic Button for Voice Input -->
+          <button type="button" id="mic-button" title="Speak Message">
+            <i class="ri-mic-line" aria-label="Speak"></i>
+          </button>
+
+          <!-- Speaker Button for TTS -->
+          <button type="button" id="speaker-button" title="Read Bot Response">
+            <i class="ri-volume-up-line" aria-label="Read Response"></i>
+          </button>
         </div>
-        <textarea id="messageInput" rows="1" placeholder="Type your message..."></textarea>
-        <button type="submit" class="send-button">
+
+        <!-- Message Input -->
+        <textarea id="messageInput" rows="1" placeholder="Type your message..." class="resize-none w-full px-3 py-2 border rounded-button focus:outline-none focus:ring-2 focus:ring-primary mt-2"></textarea>
+
+              <!-- Send Button -->
+        <button type="submit" class="send-button ml-2" title="Send">
           <i class="ri-send-plane-line"></i>
         </button>
       </form>
     </div>
   </div>
 </div>
+
+<!-- ✅ Load TTS script after all chat DOM is loaded -->
+<!-- <script src="{{ url_for('static', filename='js/tts.js') }}"></script> -->

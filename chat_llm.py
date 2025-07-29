@@ -4,6 +4,8 @@ import os
 from dotenv import load_dotenv
 from groq import Groq
 
+
+
 load_dotenv()
 chat_api_key = os.getenv("Chat_llm")
 client = Groq(api_key=chat_api_key)

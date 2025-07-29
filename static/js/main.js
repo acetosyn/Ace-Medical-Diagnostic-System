@@ -17,21 +17,25 @@ async function loadPage(url) {
       pageContent.classList.add("fade-slide-in");
 
       // Inject page-specific JS and rebind initializers
-      if (url.includes("clinic")) {
-        loadScript("/static/js/clinic.js", () => {
-          window.downloadAsPDF = downloadAsPDF;
-          window.downloadAsPNG = downloadAsPNG;
+    if (url.includes("clinic")) {
+      loadScript("/static/js/clinic.js", () => {
+        window.downloadAsPDF = downloadAsPDF;
+        window.downloadAsPNG = downloadAsPNG;
+        if (typeof editSection !== "undefined") {
           window.editSection = editSection;
-          window.diagnoseBackend = diagnoseBackend;
-        });
-        loadScript("/static/js/llm.js");
-      }
+        }
+        window.diagnoseBackend = diagnoseBackend;
+      });
+      loadScript("/static/js/llm.js");
+    }
 
       if (url.includes("chat")) {
-        loadScript("/static/js/chat.js", () => {
-          if (typeof initChat === "function") initChat();
-        });
-      }
+      loadScript("/static/js/chat.js", () => {
+        if (typeof initChat === "function") initChat();
+        loadScript("/static/js/tts.js");
+      });
+    }
+
 
       if (url.includes("home")) {
         loadScript("/static/js/home.js");
