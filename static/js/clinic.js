@@ -131,14 +131,23 @@ function renderReport(section, data) {
   }
 }
 
-// Restore the original intake or quick upload form
+// Restore the full intake form (both parts)
 function loadClinicForm(section) {
-  const part = document.getElementById(`part${section}`);
-  const template = document.getElementById(`part${section}-template`);
-  if (part && template) {
-    part.innerHTML = "";
-    part.appendChild(template.content.cloneNode(true));
+  const part1 = document.getElementById("part1");
+  const part2 = document.getElementById("part2");
+  const template1 = document.getElementById("part1-template");
+  const template2 = document.getElementById("part2-template");
+
+  if (part1 && template1 && template1.content.hasChildNodes()) {
+    part1.innerHTML = "";
+    part1.appendChild(template1.content.cloneNode(true));
   }
+  if (part2 && template2 && template2.content.hasChildNodes()) {
+    part2.innerHTML = "";
+    part2.appendChild(template2.content.cloneNode(true));
+  }
+
+  console.log("Full clinic form restored.");
 }
 
 // Simulate backend diagnosis
@@ -205,7 +214,6 @@ function handleImageUpload(inputElement, previewId) {
   reader.readAsDataURL(file);
 }
 
-// Other existing code above....
 // Clear upload and preview
 function clearUpload(inputId, previewId) {
   const input = document.getElementById(inputId);
@@ -221,39 +229,35 @@ window.downloadAsPDF = downloadAsPDF;
 window.downloadAsPNG = downloadAsPNG;
 window.diagnoseBackend = diagnoseBackend;
 
-// The Parts I added are below
+// Global cached originals
+let originalPart1 = null;
+let originalPart2 = null;
 
-// Restore the original intake or quick upload form (SPA style)
-function loadClinicForm(section) {
-  const part = document.getElementById(`part${section}`);
-  const template = document.getElementById(`part${section}-template`);
-  if (part && template) {
-    part.innerHTML = "";
-    part.appendChild(template.content.cloneNode(true));
-
-    // Test block: confirm restoration in console
-    console.log(`Form for Part ${section} restored from template.`);
-  } else {
-    console.warn(`No template found for Part ${section}`);
-  }
-}
-
-
-// Auto-save original Part 1 and Part 2 content into templates on first load
 document.addEventListener("DOMContentLoaded", () => {
+  // Save deep clones of both parts
   const part1 = document.getElementById("part1");
   const part2 = document.getElementById("part2");
 
-  const template1 = document.getElementById("part1-template");
-  const template2 = document.getElementById("part2-template");
+  if (part1) originalPart1 = part1.cloneNode(true);
+  if (part2) originalPart2 = part2.cloneNode(true);
 
-  if (part1 && template1 && !template1.content.hasChildNodes()) {
-    template1.content.appendChild(part1.cloneNode(true));
-    console.log("Saved original Part 1 into part1-template");
-  }
-
-  if (part2 && template2 && !template2.content.hasChildNodes()) {
-    template2.content.appendChild(part2.cloneNode(true));
-    console.log("Saved original Part 2 into part2-template");
-  }
+  console.log("Original forms cached in memory");
 });
+
+// Restore a single section's form from cached originals
+function loadClinicForm(section) {
+  if (section === 1 && originalPart1) {
+    const part1 = document.getElementById("part1");
+    part1.innerHTML = "";
+    part1.appendChild(originalPart1.cloneNode(true));
+    console.log("Part 1 restored from memory");
+  }
+
+  if (section === 2 && originalPart2) {
+    const part2 = document.getElementById("part2");
+    part2.innerHTML = "";
+    part2.appendChild(originalPart2.cloneNode(true));
+    console.log("Part 2 restored from memory");
+  }
+}
+

@@ -152,3 +152,21 @@ input[type="file"]:hover {
   background-color: #f3f4f6; /* Tailwind gray-100 */
   color: #374151;            /* Tailwind gray-700 */
 }
+.ai-msg {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem; /* space between icon and text */
+}
+
+.ai-msg i {
+  flex-shrink: 0; /* Prevent icon from shrinking or moving */
+  align-self: flex-start; /* Keep icon pinned to the top */
+  margin-top: 0.25rem; /* Adjust vertical alignment */
+}
+
+.ai-msg .response {
+  flex: 1; /* Text area takes up remaining space */
+  word-break: break-word;
+  white-space: pre-wrap; /* Preserve line breaks */
+}
+
