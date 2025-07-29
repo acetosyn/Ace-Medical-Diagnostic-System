@@ -2,11 +2,13 @@ from flask import Flask, render_template, request, jsonify, Response, stream_wit
 from report_llm import stream_response as report_stream_response
 from chat_llm import stream_response as chat_stream_response
 from extract_summary import summarize_bot_responses
-
+from db import init_app as init_db, register_user, login_user_helper, logout_user_helper
 import engine
 import model #this uses run_diagnosis_engine(data)
-app = Flask(__name__)
 
+app = Flask(__name__)
+app.config["MONGO_URI"] = "your_mongodb_connection_string_here"  # Replace with your Atlas URI
+init_db(app)
 # Serve the main index layout
 @app.route("/")
 def home():
@@ -132,7 +134,6 @@ def summarize_history():
         return jsonify({"summary": summary})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

@@ -1,0 +1,19 @@
+/* Slider Animation */
+#signInPanel,
+#signUpPanel {
+  transition: transform 0.5s ease-in-out;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/* Initial Positions */
+#signInPanel.translate-x-0 { transform: translateX(0%); }
+#signInPanel.-translate-x-full { transform: translateX(-100%); }
+#signUpPanel.translate-x-full { transform: translateX(100%); }
+#signUpPanel.translate-x-0 { transform: translateX(0%); }
+
+/* Toast animation */
+#toast {
+  transition: transform 0.3s ease-in-out;
+}
